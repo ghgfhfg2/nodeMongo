@@ -25,8 +25,8 @@ monggoose.connect(config.mongoURI,{
 
 
 
-app.get('/', function(req, res) {
-  res.send('hello world!!1');
+app.get('/api/hello', function(req, res) {
+  res.send('안녕하세요~');
 });
 
 app.post('/api/user/register', (req,res) => {

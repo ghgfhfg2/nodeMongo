@@ -24,17 +24,17 @@ monggoose
   .then(() => console.log("MongoDb Connected..."))
   .catch((err) => console.log(err));
 
-app.get("/api/hello", function (req, res) {
+app.get("/api/hello", (req, res) => {
   res.send("안녕하세요~");
 });
 
-app.post("/api/user/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
 
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
-      success: true,
+      joinSuccess: true,
     });
   });
 });
@@ -74,6 +74,15 @@ app.get("/api/users/auth", auth, (req, res) => {
     lastname: req.user.lastname,
     role: req.user.role,
     image: req.user.image,
+  });
+});
+
+app.get("/api/users/logout", auth, (req, res) => {
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true,
+    });
   });
 });
 

@@ -33,7 +33,6 @@ function RegisterPage(props) {
 
     dispatch(joinUser(body)).then((response) => {
       if (response.payload.joinSuccess) {
-        console.log("성공");
         props.history.push("/");
       } else {
         alert("Error");

@@ -10,15 +10,6 @@ function LandingPage(props) {
     });
   }, []);
 
-  const onLogout = () => {
-    axios
-      .get(`/api/users/logout`)
-      .then((res) =>
-        res.data.success
-          ? props.history.push("/login")
-          : alert("로그아웃에 실패헸습니다.")
-      );
-  };
   return (
     <div
       style={{
@@ -30,7 +21,6 @@ function LandingPage(props) {
       }}
     >
       <h2>시작페이지</h2>
-      <button onClick={onLogout}>로그아웃</button>
     </div>
   );
 }

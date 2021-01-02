@@ -7,7 +7,6 @@ export default function (SpecificComponent, option, adminRoute = null) {
     const dispatch = useDispatch();
     useEffect(() => {
       const path = window.location.pathname;
-      console.log(path);
       dispatch(auth()).then((res) => {
         if (!res.payload.isAuth) {
           if (option) {

@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 function RightMenu(props) {
   const user = useSelector((state) => state.user);
-  console.log(user.userData);
 
   const onLogout = () => {
     axios
@@ -16,19 +15,26 @@ function RightMenu(props) {
           : alert("로그아웃에 실패헸습니다.")
       );
   };
-  return (
-    <>
-      <a href="/register" style={{ marginRight: "10px" }}>
-        join
-      </a>
-      <a href="/login" style={{ marginRight: "10px" }}>
-        login
-      </a>
-      <a href="/" style={{ marginRight: "10px" }} onClick={onLogout}>
-        logout
-      </a>
-    </>
-  );
+  if (user.userData && !user.userData.isAuth) {
+    return (
+      <>
+        <a href="/register" style={{ marginRight: "10px" }}>
+          join
+        </a>
+        <a href="/login" style={{ marginRight: "10px" }}>
+          login
+        </a>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <a href="/" style={{ marginRight: "10px" }} onClick={onLogout}>
+          logout
+        </a>
+      </>
+    );
+  }
 }
 
 export default withRouter(RightMenu);

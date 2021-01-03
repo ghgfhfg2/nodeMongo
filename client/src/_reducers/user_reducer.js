@@ -5,9 +5,9 @@ export default function (state = {}, action) {
     case LOGIN_USER:
       return { ...state, loginSuccess: action.payload };
     case JOIN_USER:
-      return { ...state, joinSuccess: action.paload };
+      return { ...state, joinSuccess: action.payload };
     case AUTH_USER:
-      return { ...state, userData: action.paload };
+      return { ...state, userData: action.payload };
     default:
       return state;
   }

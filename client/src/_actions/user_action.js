@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { LOGIN_USER, JOIN_USER, AUTH_USER } from "./types";
+import { LOGIN_USER, JOIN_USER, AUTH_USER, CHECK_USER } from "./types";
 
 export function loginUser(dataToSubmit) {
   const request = Axios.post("/api/users/login", dataToSubmit).then(
@@ -27,6 +27,18 @@ export function auth() {
   );
   return {
     type: AUTH_USER,
+    payload: request,
+  };
+}
+
+export function check(dataToSubmit) {
+  const request = Axios.post("/api/users/check", dataToSubmit).then(
+    (response) => response.data
+  );
+  console.log("req:" + request);
+  console.log(request);
+  return {
+    type: CHECK_USER,
     payload: request,
   };
 }

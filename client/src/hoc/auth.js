@@ -22,8 +22,6 @@ export default function (SpecificComponent, option, adminRoute = null) {
               if (path === "/login") {
                 alert("이미 로그인 한 상태 입니다.");
                 props.history.push("/");
-              } else {
-                props.history.push("/");
               }
             }
           }

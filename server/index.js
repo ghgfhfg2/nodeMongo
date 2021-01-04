@@ -8,6 +8,7 @@ const config = require("./config/key");
 const { auth } = require("./middleware/auth");
 
 const { User } = require("./User");
+const { Check } = require("./Check");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -82,6 +83,17 @@ app.get("/api/users/logout", auth, (req, res) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).send({
       success: true,
+    });
+  });
+});
+
+app.post("/api/users/check", (req, res) => {
+  console.log(req.body);
+  const check = new Check(req.body);
+  check.save((err) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({
+      checkSuccess: true,
     });
   });
 });

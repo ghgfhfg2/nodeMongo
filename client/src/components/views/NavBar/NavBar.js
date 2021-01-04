@@ -8,7 +8,12 @@ function NavBar(props) {
     <>
       <Header className="header">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <a href="/">home</a>
+          <div>
+            <a style={{ marginRight: "15px" }} href="/">
+              home
+            </a>
+            <a href="/check">check</a>
+          </div>
           <div>
             <RightMenu />
           </div>

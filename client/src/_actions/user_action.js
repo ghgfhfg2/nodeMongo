@@ -32,10 +32,11 @@ export function auth() {
 }
 
 export function check(dataToSubmit) {
+  console.log("user_action");
+  console.log(dataToSubmit);
   const request = Axios.post("/api/users/check", dataToSubmit).then(
     (response) => response.data
   );
-  console.log("req:" + request);
   console.log(request);
   return {
     type: CHECK_USER,

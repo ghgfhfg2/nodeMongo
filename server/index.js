@@ -3,6 +3,7 @@ const app = express();
 const port = 5000;
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const config = require("./config/key");
 const { auth } = require("./middleware/auth");
@@ -10,8 +11,8 @@ const { auth } = require("./middleware/auth");
 const { User } = require("./User");
 const { Check } = require("./Check");
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const monggoose = require("mongoose");
@@ -24,12 +25,13 @@ monggoose
   })
   .then(() => console.log("MongoDb Connected..."))
   .catch((err) => console.log(err));
+app.use(cors());
 
 app.get("/api/hello", (req, res) => {
   res.send("안녕하세요~");
 });
 
-app.post("/api/users/register", (req, res) => {
+app.get("/api/users/register", (req, res) => {
   const user = new User(req.body);
 
   user.save((err, userInfo) => {
@@ -70,11 +72,9 @@ app.get("/api/users/auth", auth, (req, res) => {
     _id: req.user._id,
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
-    eamil: req.user.eamil,
+    email: req.user.email,
     name: req.user.name,
-    lastname: req.user.lastname,
     role: req.user.role,
-    image: req.user.image,
   });
 });
 
@@ -88,14 +88,23 @@ app.get("/api/users/logout", auth, (req, res) => {
 });
 
 app.post("/api/users/check", (req, res) => {
-  console.log(req.body);
   const check = new Check(req.body);
-  check.save((err) => {
+  check.save((err, checkInfo) => {
     if (err) return res.status(400).json({ success: false, err });
     return res.status(200).json({
       checkSuccess: true,
     });
   });
 });
-
+/*
+app.post("/api/users/checkData", (req, res) => {
+  console.log(req.body);
+  Check.find({ _id: req.body._id }, (err, data) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({
+      dataCheck: true,
+    });
+  });
+});
+*/
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

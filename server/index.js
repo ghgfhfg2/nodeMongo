@@ -96,15 +96,15 @@ app.post("/api/users/check", (req, res) => {
     });
   });
 });
-/*
+
 app.post("/api/users/checkData", (req, res) => {
-  console.log(req.body);
-  Check.find({ _id: req.body._id }, (err, data) => {
+  Check.findOne({ email: req.body.email }, (err, data) => {
     if (err) return res.status(400).json({ success: false, err });
     return res.status(200).json({
       dataCheck: true,
+      data
     });
-  });
+  }).sort({date:-1});
 });
-*/
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

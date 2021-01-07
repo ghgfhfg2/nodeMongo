@@ -9,6 +9,10 @@ const checkSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  email: {
+    type: String,
+    trim: true,
+  },
   date: {
     type: Number,
   },

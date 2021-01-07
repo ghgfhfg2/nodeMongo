@@ -22,7 +22,11 @@ function App() {
           path="/register"
           component={Auth(RegisterPage, false)}
         ></Route>
-        <Route exact path="/history" component={Auth(HistoryPage, null)}></Route>
+        <Route
+          exact
+          path="/history"
+          component={Auth(HistoryPage, null)}
+        ></Route>
       </Switch>
     </Router>
   );

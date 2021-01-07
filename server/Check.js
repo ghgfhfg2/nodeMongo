@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const checkSchema = mongoose.Schema({
+  writer: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
   name: {
     type: String,
     maxLength: 50,
@@ -9,11 +14,10 @@ const checkSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  email: {
-    type: String,
-    trim: true,
-  },
   date: {
+    type: Number,
+  },
+  day: {
     type: String,
   },
   check: {

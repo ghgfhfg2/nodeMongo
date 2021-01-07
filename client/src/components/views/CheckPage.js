@@ -11,17 +11,19 @@ export const ContentBox = styled.div`
   padding: 20px;
 `;
 
-function getFormatDate(date){
-  let year = date.getFullYear();              
-  let month = (1 + date.getMonth());          
-  month = month >= 10 ? month : '0' + month;  
-  let day = date.getDate();                   
-  day = day >= 10 ? day : '0' + day;     
-  let week = ['일', '월', '화', '수', '목', '금', '토'];
-  let dayOfWeek = week[date.getDay()];     
-  return  year + '' + month + '' + day + '|' + dayOfWeek;       
+function getFormatDate(date) {
+  let year = date.getFullYear();
+  let month = 1 + date.getMonth();
+  month = month >= 10 ? month : "0" + month;
+  let day = date.getDate();
+  day = day >= 10 ? day : "0" + day;
+  let week = ["일", "월", "화", "수", "목", "금", "토"];
+  let dayOfWeek = week[date.getDay()];
+  return year + "" + month + "" + day + "|" + dayOfWeek;
 }
 const currentDate = getFormatDate(new Date());
+const dbDate = Number(currentDate.split("|")[0]);
+const dbDay = currentDate.split("|")[1];
 function CheckPage(props) {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -29,24 +31,24 @@ function CheckPage(props) {
   const onChageRadio = (e) => {
     setRadio(e.target.value);
   };
-  
+
   const [Checked, setChecked] = useState("");
   useEffect(() => {
-    if (user.userData) {
-      console.log(user.userData)
-      axios.post("/api/users/checkData", user.userData).then((res) => {
-        if(res.data.dataCheck && res.data.data){
-          const checkedDate = res.data.data.date;
-          if (currentDate == checkedDate) {
-            setChecked('check');
-          } else {
-            setChecked('none');
-          }
-        }        
-      });
-    }
+    axios.get("/api/users/checkData").then((res) => {
+      console.log(res);
+      if (res.data.dataCheck && res.data.data) {
+        const checkedDate = res.data.data.date;
+        if (dbDate == checkedDate) {
+          setChecked("check");
+        } else {
+          setChecked("none");
+        }
+      } else {
+        setChecked("none");
+      }
+    });
   }, [user]);
-  
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     let body = {
@@ -54,12 +56,12 @@ function CheckPage(props) {
       name: user.userData.name,
       email: user.userData.email,
       role: user.userData.role,
-      date: currentDate,
+      date: dbDate,
+      day: dbDay,
     };
-    dispatch(check(body)).then((res) => {
-    });
+    dispatch(check(body)).then((res) => {});
   };
-    if(Checked==="none"){
+  if (Checked === "none") {
     return (
       <>
         <ContentBox>
@@ -85,22 +87,18 @@ function CheckPage(props) {
         </ContentBox>
       </>
     );
-  }else if(Checked==="check"){
-    return(
+  } else if (Checked === "check") {
+    return (
       <>
-        <ContentBox>
-          checked
-        </ContentBox>
+        <ContentBox>checked</ContentBox>
       </>
-    )
-  }else{
-    return(
+    );
+  } else {
+    return (
       <>
-        <ContentBox>
-          loading...
-        </ContentBox>        
+        <ContentBox>loading...</ContentBox>
       </>
-    )
+    );
   }
 }
 

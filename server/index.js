@@ -97,14 +97,20 @@ app.post("/api/users/check", (req, res) => {
   });
 });
 
-app.post("/api/users/checkData", (req, res) => {
-  Check.findOne({ email: req.body.email }, (err, data) => {
-    if (err) return res.status(400).json({ success: false, err });
-    return res.status(200).json({
-      dataCheck: true,
-      data
+app.get("/api/users/checkData", (req, res) => {
+  Check.findOne()
+    .sort({ date: -1 })
+    .exec((err, data) => {
+      if (err) return res.status(400).json({ success: false, err });
+      res.status(200).json({
+        dataCheck: true,
+        data,
+      });
     });
-  }).sort({date:-1});
+});
+
+app.get("/api/hello", (req, res) => {
+  res.send("안녕하세요~");
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

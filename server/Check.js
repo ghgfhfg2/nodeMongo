@@ -14,7 +14,7 @@ const checkSchema = mongoose.Schema({
     trim: true,
   },
   date: {
-    type: Number,
+    type: String,
   },
   check: {
     type: String,

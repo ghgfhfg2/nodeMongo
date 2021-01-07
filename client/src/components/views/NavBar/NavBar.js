@@ -12,7 +12,8 @@ function NavBar(props) {
             <a style={{ marginRight: "15px" }} href="/">
               home
             </a>
-            <a href="/check">check</a>
+            <a style={{ marginRight: "15px" }} href="/check">check</a>
+            <a style={{ marginRight: "15px" }} href="/history">history</a>
           </div>
           <div>
             <RightMenu />

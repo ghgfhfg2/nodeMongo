@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { check } from "../../_actions/user_action";
 import axios from "axios";
 
-const ContentBox = styled.div`
+export const ContentBox = styled.div`
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
@@ -12,15 +12,16 @@ const ContentBox = styled.div`
 `;
 
 function getFormatDate(date){
-  var year = date.getFullYear();              
-  var month = (1 + date.getMonth());          
+  let year = date.getFullYear();              
+  let month = (1 + date.getMonth());          
   month = month >= 10 ? month : '0' + month;  
-  var day = date.getDate();                   
-  day = day >= 10 ? day : '0' + day;          
-  return  year + '' + month + '' + day;       
+  let day = date.getDate();                   
+  day = day >= 10 ? day : '0' + day;     
+  let week = ['일', '월', '화', '수', '목', '금', '토'];
+  let dayOfWeek = week[date.getDay()];     
+  return  year + '' + month + '' + day + '|' + dayOfWeek;       
 }
-const currentDate = Number(getFormatDate(new Date()));
-
+const currentDate = getFormatDate(new Date());
 function CheckPage(props) {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -28,18 +29,18 @@ function CheckPage(props) {
   const onChageRadio = (e) => {
     setRadio(e.target.value);
   };
-
-  const checkData = useSelector((state) => state.user);
   
-  const [Checked, setChecked] = useState(false);
+  const [Checked, setChecked] = useState("");
   useEffect(() => {
     if (user.userData) {
+      console.log(user.userData)
       axios.post("/api/users/checkData", user.userData).then((res) => {
         if(res.data.dataCheck && res.data.data){
           const checkedDate = res.data.data.date;
           if (currentDate == checkedDate) {
-            setChecked(true);
+            setChecked('check');
           } else {
+            setChecked('none');
           }
         }        
       });
@@ -58,7 +59,7 @@ function CheckPage(props) {
     dispatch(check(body)).then((res) => {
     });
   };
-    if(!Checked){
+    if(Checked==="none"){
     return (
       <>
         <ContentBox>
@@ -84,12 +85,20 @@ function CheckPage(props) {
         </ContentBox>
       </>
     );
-  }else{
+  }else if(Checked==="check"){
     return(
       <>
         <ContentBox>
           checked
         </ContentBox>
+      </>
+    )
+  }else{
+    return(
+      <>
+        <ContentBox>
+          loading...
+        </ContentBox>        
       </>
     )
   }

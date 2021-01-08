@@ -15,7 +15,7 @@ function App() {
       <Nav />
       <Switch>
         <Route exact path="/" component={Auth(LandingPage, null)}></Route>
-        <Route exact path="/check" component={Auth(CheckPage, null)}></Route>
+        <Route exact path="/check" component={Auth(CheckPage, true)}></Route>
         <Route exact path="/login" component={Auth(LoginPage, false)}></Route>
         <Route
           exact
@@ -25,7 +25,7 @@ function App() {
         <Route
           exact
           path="/history"
-          component={Auth(HistoryPage, null)}
+          component={Auth(HistoryPage, true)}
         ></Route>
       </Switch>
     </Router>

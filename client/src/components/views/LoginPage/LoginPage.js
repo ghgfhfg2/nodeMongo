@@ -6,11 +6,11 @@ import { withRouter } from "react-router-dom";
 function LoginPage(props) {
   const dispatch = useDispatch();
 
-  const [Email, setEmail] = useState("");
+  const [Id, setId] = useState("");
   const [passWord, setPassword] = useState("");
 
-  const onEmailHandler = (e) => {
-    setEmail(e.currentTarget.value);
+  const onIdHandler = (e) => {
+    setId(e.currentTarget.value);
   };
   const onPasswordHandler = (e) => {
     setPassword(e.currentTarget.value);
@@ -19,7 +19,7 @@ function LoginPage(props) {
     e.preventDefault();
 
     let body = {
-      email: Email,
+      id: Id,
       password: passWord,
     };
     console.log(body);
@@ -51,7 +51,7 @@ function LoginPage(props) {
         }}
       >
         <label>Email</label>
-        <input type="email" value={Email} onChange={onEmailHandler} />
+        <input type="text" value={Id} onChange={onIdHandler} />
         <label>password</label>
         <input type="password" value={passWord} onChange={onPasswordHandler} />
         <br />

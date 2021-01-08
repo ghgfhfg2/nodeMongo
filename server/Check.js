@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
 const checkSchema = mongoose.Schema({
-  writer: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+  id:{
+    type: String,
   },
   name: {
     type: String,
@@ -21,6 +19,9 @@ const checkSchema = mongoose.Schema({
     type: String,
   },
   check: {
+    type: String,
+  },
+  comment: {
     type: String,
   },
 });

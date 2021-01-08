@@ -31,7 +31,7 @@ app.get("/api/hello", (req, res) => {
   res.send("안녕하세요~");
 });
 
-app.get("/api/users/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
 
   user.save((err, userInfo) => {
@@ -43,7 +43,7 @@ app.get("/api/users/register", (req, res) => {
 });
 
 app.post("/api/users/login", (req, res) => {
-  User.findOne({ email: req.body.email }, (err, user) => {
+  User.findOne({ id: req.body.id }, (err, user) => {
     if (!user) {
       return res.json({
         loginSuccess: false,
@@ -72,7 +72,7 @@ app.get("/api/users/auth", auth, (req, res) => {
     _id: req.user._id,
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
-    email: req.user.email,
+    id: req.user.id,
     name: req.user.name,
     role: req.user.role,
   });
@@ -97,9 +97,9 @@ app.post("/api/users/check", (req, res) => {
   });
 });
 
-app.get("/api/users/checkData", (req, res) => {
-  Check.findOne()
-    .sort({ date: -1 })
+app.post("/api/users/checkData", (req, res) => {
+  Check.findOne({"id":req.body.id})
+    .sort({date:-1})
     .exec((err, data) => {
       if (err) return res.status(400).json({ success: false, err });
       res.status(200).json({
@@ -109,8 +109,16 @@ app.get("/api/users/checkData", (req, res) => {
     });
 });
 
-app.get("/api/hello", (req, res) => {
-  res.send("안녕하세요~");
+app.post("/api/users/history", (req, res) => {
+  Check.find({"id":req.body.id})
+    .sort({date:-1})
+    .exec((err, data) => {
+      if (err) return res.status(400).json({ success: false, err });
+      res.status(200).json({
+        dataCheck: true,
+        data,
+      });
+    });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

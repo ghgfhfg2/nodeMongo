@@ -24,7 +24,7 @@ function getFormatDate(date) {
 const currentDate = getFormatDate(new Date());
 const dbDate = Number(currentDate.split("|")[0]);
 const dbDay = currentDate.split("|")[1];
-function CheckPage(props) {
+function CheckPage() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [radio, setRadio] = useState("");
@@ -32,21 +32,28 @@ function CheckPage(props) {
     setRadio(e.target.value);
   };
 
+  const [Comment, setComment] = useState("")
+  const onChangeComment = (e) => {
+    setComment(e.target.value);
+  }
+
   const [Checked, setChecked] = useState("");
+
   useEffect(() => {
-    axios.get("/api/users/checkData").then((res) => {
-      console.log(res);
-      if (res.data.dataCheck && res.data.data) {
-        const checkedDate = res.data.data.date;
-        if (dbDate == checkedDate) {
-          setChecked("check");
+    if (user.userData) {    
+      axios.post("/api/users/checkData",user.userData).then((res) => {
+        if (res.data.dataCheck && res.data.data) {
+          const checkedDate = res.data.data.date;          
+          if (dbDate == checkedDate) {
+            setChecked("check");
+          } else {
+            setChecked("none");
+          }
         } else {
           setChecked("none");
         }
-      } else {
-        setChecked("none");
-      }
-    });
+      });
+    }
   }, [user]);
 
   const onSubmitHandler = (e) => {
@@ -54,10 +61,11 @@ function CheckPage(props) {
     let body = {
       check: radio,
       name: user.userData.name,
-      email: user.userData.email,
+      id: user.userData.id,
       role: user.userData.role,
       date: dbDate,
       day: dbDay,
+      comment: Comment
     };
     dispatch(check(body)).then((res) => {});
   };
@@ -82,6 +90,7 @@ function CheckPage(props) {
               onChange={onChageRadio}
             />
             <label htmlFor="radio2">radio2</label>
+            <textarea onChange={onChangeComment}>{Comment}</textarea>
             <button>submit</button>
           </form>
         </ContentBox>

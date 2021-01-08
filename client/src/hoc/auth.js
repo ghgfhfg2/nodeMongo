@@ -10,6 +10,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
       dispatch(auth()).then((res) => {
         if (!res.payload.isAuth) {
           if (option) {
+            alert('로그인이 필요합니다.')
             props.history.push("/login");
           }
           //로그인 하지 않은 상태

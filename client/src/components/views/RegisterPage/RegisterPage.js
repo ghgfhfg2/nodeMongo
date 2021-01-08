@@ -8,22 +8,12 @@ const PW_CONFIRM = styled.span`
   display:${props => props.pw === props.pw2 ? 'none' : 'block'};
   font-size:12px;
 `
-const ID_CONFIRM = styled.span`
-  .no{
-    display:${props => props.IdConfirm === false && props.IdConfirm != "" ? 'block' : 'none'};
-  }
-  .ok{
-    display:${props => props.IdConfirm === true ? 'block' : 'none'};
-  }
-  font-size:12px;
-`
 
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
 
   const [Id, setId] = useState("");
-  const [IdConfirm, setIdConfirm] = useState("");
   const [Name, setName] = useState("");
   const [passWord, setPassword] = useState("");
   const [passWord2, setPassword2] = useState("");
@@ -31,14 +21,6 @@ function RegisterPage(props) {
   const idReg = /^[A-za-z]{4,6}/g;
 
   const onIdHandler = (e) => {
-    console.log(e.currentTarget.value)
-    console.log(idReg.test(e.currentTarget.value))
-    if(idReg.test(e.currentTarget.value)){
-      setIdConfirm(true)
-      console.log(e.currentTarget.value)
-    }else{
-      setIdConfirm(false)
-    }
     setId(e.currentTarget.value);
     
   };
@@ -60,19 +42,19 @@ function RegisterPage(props) {
       password: passWord,
     };
 
-    if(!IdConfirm || Id === ""){
+    if(!idReg.test(Id) || Id === ""){
       alert('아이디를 확인해주세요')
       return
     }
     
-    if(passWord != passWord2){
-      alert('비밀번호 확인이 일치하지 않습니다.')
+    if(passWord != passWord2 || !passWord || !passWord2){
+      alert('비밀번호를 확인해주세요')
       return
     }
 
     dispatch(joinUser(body)).then((response) => {
       if (response.payload.joinSuccess) {
-        props.history.push("/");
+        props.history.push("/login");
       } else {
         alert("Error");
       }
@@ -96,11 +78,7 @@ function RegisterPage(props) {
         }}
       >
         <label>Id</label>
-        <input type="text" value={Id} onChange={onIdHandler} />
-        <ID_CONFIRM IdConfirm={IdConfirm}>
-          <span className="no">영문,숫자조합 4~12자리만 가능합니다.</span>
-          <span className="ok">사용가능한 아이디 입니다.</span>
-        </ID_CONFIRM>
+        <input type="text" placeholder="영문,숫자조합 4~12자리" value={Id} onChange={onIdHandler} />
         <label>Name</label>
         <input type="text" value={Name} onChange={onNameHandler} />
         <label>password</label>

@@ -2,26 +2,9 @@ import React, { useState, useEffect } from "react";
 import { ContentBox } from "./CheckPage";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { getDateFormat } from "./Func";
+import Loading from "./Loading";
 
-function getDateFormat(date , type, s) {
-    let ck;
-    let rtstr = "";
-    let j = 0;
-    for(let i = 0; i < type.length; i++) {
-            if(type.substring(i,i+1) == 'x') {
-                rtstr += date.substring(j,j+1);
-            } else {
-            j--;
-            rtstr += type.substring(i,i+1);
-            }
-        j++;
-    } 
-    if(s == "dw") {
-        document.write(rtstr);
-    } else {
-        return rtstr;
-    }
-}
 function HistoryPage(props) {
   const user = useSelector((state) => state.user);
   const [History, setHistory] = useState()
@@ -61,7 +44,7 @@ function HistoryPage(props) {
       return (
           <>
             <ContentBox>
-                loading...
+                <Loading />
             </ContentBox>
           </>
       )

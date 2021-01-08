@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { check } from "../../_actions/user_action";
 import axios from "axios";
+import { getFormatDate } from "./Func";
+import Loading from "./Loading";
 
 export const ContentBox = styled.div`
   width: 100%;
@@ -11,16 +13,6 @@ export const ContentBox = styled.div`
   padding: 20px;
 `;
 
-function getFormatDate(date) {
-  let year = date.getFullYear();
-  let month = 1 + date.getMonth();
-  month = month >= 10 ? month : "0" + month;
-  let day = date.getDate();
-  day = day >= 10 ? day : "0" + day;
-  let week = ["일", "월", "화", "수", "목", "금", "토"];
-  let dayOfWeek = week[date.getDay()];
-  return year + "" + month + "" + day + "|" + dayOfWeek;
-}
 const currentDate = getFormatDate(new Date());
 const dbDate = Number(currentDate.split("|")[0]);
 const dbDay = currentDate.split("|")[1];
@@ -38,9 +30,13 @@ function CheckPage() {
   }
 
   const [Checked, setChecked] = useState("");
-
+  const lastCheckBody = {
+    ...user.userData,
+    date: currentDate
+  }
   useEffect(() => {
     if (user.userData) {    
+      axios.post("/api/users/lastCheck",lastCheckBody);
       axios.post("/api/users/checkData",user.userData).then((res) => {
         if (res.data.dataCheck && res.data.data) {
           const checkedDate = res.data.data.date;          

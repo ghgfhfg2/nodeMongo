@@ -97,6 +97,16 @@ app.post("/api/users/check", (req, res) => {
   });
 });
 
+app.post("/api/users/lastCheck", (req, res) => {
+  User.findOneAndUpdate({ _id: req.body._id }, { lastCheck: req.body.date }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true,
+    });
+  });
+});
+
+
 app.post("/api/users/checkData", (req, res) => {
   Check.findOne({"id":req.body.id})
     .sort({date:-1})
@@ -120,5 +130,40 @@ app.post("/api/users/history", (req, res) => {
       });
     });
 });
+
+app.post("/api/users/historyAll", (req,res) => {
+  Check.find({date:req.body.date})
+    .sort({date:-1})
+    .exec((err, data) => {
+      if (err) return res.status(400).json({ success: false, err });
+      res.status(200).json({
+        dataCheck: true,
+        data,
+      });
+    });
+});
+
+app.get("/api/users/userNormal", (req,res) => {
+  Check.find({role:0})
+    .exec((err, data) => {
+      if (err) return res.status(400).json({ success: false, err });
+      res.status(200).json({
+        dataCheck: true,
+        data,
+      });
+    });
+});
+
+app.post("/api/users/userNormal", (req,res) => {
+  Check.find({role:0})
+    .exec((err, data) => {
+      if (err) return res.status(400).json({ success: false, err });
+      res.status(200).json({
+        dataCheck: true,
+        data,
+      });
+    });
+});
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

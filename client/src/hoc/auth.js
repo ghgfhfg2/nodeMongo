@@ -16,7 +16,8 @@ export default function (SpecificComponent, option, adminRoute = null) {
           //로그인 하지 않은 상태
         } else {
           if (adminRoute && !res.payload.isAdmin) {
-            alert("권한이 없습니다.");
+            props.history.push("/");
+            alert("권한이 없습니다.")
             return;
           } else {
             if (!option) {

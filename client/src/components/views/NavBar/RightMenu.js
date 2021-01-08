@@ -29,6 +29,9 @@ function RightMenu(props) {
   } else {
     return (
       <>
+        <a href="/admin" style={{ marginRight: "10px" }}>
+          admin
+        </a>
         <a href="/" style={{ marginRight: "10px" }} onClick={onLogout}>
           logout
         </a>

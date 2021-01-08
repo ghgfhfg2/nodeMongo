@@ -6,6 +6,7 @@ import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 import CheckPage from "./components/views/CheckPage";
 import HistoryPage from "./components/views/HistoryPage";
+import AdminPage from "./components/views/AdminPage";
 import Auth from "./hoc/auth";
 import Nav from "./components/views/NavBar/NavBar";
 
@@ -27,6 +28,7 @@ function App() {
           path="/history"
           component={Auth(HistoryPage, true)}
         ></Route>
+        <Route exact path="/admin" component={Auth(AdminPage, false, true)}></Route>
       </Switch>
     </Router>
   );

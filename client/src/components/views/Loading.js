@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import * as antIcon from "@ant-design/icons";
 
 function Loading() {
-    return (
-        <>
-           loading 
-        </>
-    )
+  return (
+    <div className="center-box">
+      <antIcon.LoadingOutlined />
+    </div>
+  );
 }
 
-export default Loading
+export default Loading;

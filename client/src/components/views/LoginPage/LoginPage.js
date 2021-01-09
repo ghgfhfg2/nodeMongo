@@ -22,7 +22,6 @@ function LoginPage(props) {
       id: Id,
       password: passWord,
     };
-    console.log(body);
 
     dispatch(loginUser(body)).then((response) => {
       if (response.payload.loginSuccess) {
@@ -50,7 +49,7 @@ function LoginPage(props) {
           flexDirection: "column",
         }}
       >
-        <label>Email</label>
+        <label>Id</label>
         <input type="text" value={Id} onChange={onIdHandler} />
         <label>password</label>
         <input type="password" value={passWord} onChange={onPasswordHandler} />

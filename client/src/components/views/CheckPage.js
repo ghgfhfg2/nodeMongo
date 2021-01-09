@@ -5,6 +5,7 @@ import { check } from "../../_actions/user_action";
 import axios from "axios";
 import { getFormatDate } from "./Func";
 import Loading from "./Loading";
+import * as antIcon from "@ant-design/icons";
 
 export const ContentBox = styled.div`
   width: 100%;
@@ -24,22 +25,18 @@ function CheckPage() {
     setRadio(e.target.value);
   };
 
-  const [Comment, setComment] = useState("")
+  const [Comment, setComment] = useState("");
   const onChangeComment = (e) => {
     setComment(e.target.value);
-  }
+  };
 
   const [Checked, setChecked] = useState("");
-  const lastCheckBody = {
-    ...user.userData,
-    date: currentDate
-  }
+
   useEffect(() => {
-    if (user.userData) {    
-      axios.post("/api/users/lastCheck",lastCheckBody);
-      axios.post("/api/users/checkData",user.userData).then((res) => {
+    if (user.userData) {
+      axios.post("/api/users/checkData", user.userData).then((res) => {
         if (res.data.dataCheck && res.data.data) {
-          const checkedDate = res.data.data.date;          
+          const checkedDate = res.data.data.date;
           if (dbDate == checkedDate) {
             setChecked("check");
           } else {
@@ -61,9 +58,10 @@ function CheckPage() {
       role: user.userData.role,
       date: dbDate,
       day: dbDay,
-      comment: Comment
+      comment: Comment,
     };
     dispatch(check(body)).then((res) => {});
+    axios.post("/api/users/lastCheck", body).then((res) => console.log(res));
   };
   if (Checked === "none") {
     return (
@@ -86,7 +84,9 @@ function CheckPage() {
               onChange={onChageRadio}
             />
             <label htmlFor="radio2">radio2</label>
-            <textarea onChange={onChangeComment}>{Comment}</textarea>
+            <textarea value={Comment} onChange={onChangeComment}>
+              {Comment}
+            </textarea>
             <button>submit</button>
           </form>
         </ContentBox>
@@ -95,13 +95,15 @@ function CheckPage() {
   } else if (Checked === "check") {
     return (
       <>
-        <ContentBox>checked</ContentBox>
+        <div className="center-box">
+          <antIcon.CheckOutlined /> 식단체크 참여 완료
+        </div>
       </>
     );
   } else {
     return (
       <>
-        <ContentBox>loading...</ContentBox>
+        <Loading />
       </>
     );
   }

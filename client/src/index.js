@@ -1,27 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
-import 'antd/dist/antd.css';
-import { applyMiddleware, createStore } from 'redux';
-import promiseMiddleware from 'redux-promise';
-import ReduxThunk from 'redux-thunk';
-import Reducer from './_reducers';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./base.css";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import "antd/dist/antd.css";
+import { applyMiddleware, createStore } from "redux";
+import promiseMiddleware from "redux-promise";
+import ReduxThunk from "redux-thunk";
+import Reducer from "./_reducers";
 
-const creatStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
+const creatStoreWithMiddleware = applyMiddleware(
+  promiseMiddleware,
+  ReduxThunk
+)(createStore);
 
 ReactDOM.render(
   <Provider
-    store={creatStoreWithMiddleware(Reducer,
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    store={creatStoreWithMiddleware(
+      Reducer,
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
         window.__REDUX_DEVTOOLS_EXTENSION__()
-      )}
+    )}
   >
     <App />
-  </Provider>
-  ,document.getElementById('root')
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

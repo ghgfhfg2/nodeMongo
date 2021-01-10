@@ -6,13 +6,31 @@ import axios from "axios";
 import { getFormatDate } from "./Func";
 import Loading from "./Loading";
 import * as antIcon from "@ant-design/icons";
-import { Input } from "antd";
 
 export const ContentBox = styled.div`
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px 15px;
+`;
+export const BasicInput = styled.input`
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 10px;
+`;
+export const BasicBtn = styled.button`
+  width: 100%;
+  height: 40px;
+  border: 1px solid #91d081;
+  border-radius: 5px;
+  background: #91d081;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
 `;
 
 const currentDate = getFormatDate(new Date());
@@ -78,7 +96,9 @@ function CheckPage() {
                 value="radio1"
                 onChange={onChageRadio}
               />
-              <label htmlFor="radio1">일반식</label>
+              <label className="basic-lunch" htmlFor="radio1">
+                <i className="ic-basic-lunch"></i>일반식
+              </label>
               <input
                 className="customRadio hidden"
                 type="radio"
@@ -88,15 +108,16 @@ function CheckPage() {
                 onChange={onChageRadio}
               />
               <label htmlFor="radio2" style={{ marginRight: "0px" }}>
-                다식
+                <i className="ic-diet-lunch"></i>다&nbsp;&nbsp;식
               </label>
               <div className="radio-bot-box">
-                <Input
+                <BasicInput
+                  style={{ width: "100%" }}
                   value={Comment}
                   placeholder="기타"
                   onChange={onChangeComment}
                 />
-                <button>submit</button>
+                <BasicBtn style={{ marginTop: "10px" }}>체크하기</BasicBtn>
               </div>
             </div>
           </form>
@@ -106,9 +127,11 @@ function CheckPage() {
   } else if (Checked === "check") {
     return (
       <>
-        <div className="center-box">
-          <antIcon.CheckOutlined /> 식단체크 참여 완료
-        </div>
+        <ContentBox className="center-box">
+          <span className="ic-check">
+            <antIcon.CheckOutlined /> 식단체크 참여 완료
+          </span>
+        </ContentBox>
       </>
     );
   } else {

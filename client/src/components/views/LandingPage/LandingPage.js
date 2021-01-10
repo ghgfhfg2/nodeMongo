@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { ContentBox } from "../CheckPage";
 import * as bsIcon from "react-icons/bs";
-export const LandingLink = styled.a`
+const LandingLink = styled.a`
   display: flex;
   width: 200px;
   height: 200px;

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { getDateFormat } from "./Func";
 import Loading from "./Loading";
+import { Row, Col } from "antd";
 
 function HistoryPage(props) {
   const user = useSelector((state) => state.user);
@@ -21,19 +22,26 @@ function HistoryPage(props) {
     return (
       <>
         <ContentBox>
-          <ul className="myinfo">
+          <Row className="my-history" gutter={10}>
             {History.map((list, index) => (
-              <li key={index}>
-                <div>
-                  <span className="date">
-                    {getDateFormat(String(list.date), "xxxx-xx-xx")}({list.day})
-                  </span>
-                  <span className="choice">{list.check}</span>
+              <Col lg={8} md={12} xs={24} key={index}>
+                <div className={`list ${list.check}`}>
+                  <div className="history-flex-box">
+                    <span className="date">
+                      {getDateFormat(String(list.date), "xxxx-xx-xx")}(
+                      {list.day})
+                    </span>
+                    <span className="choice">
+                      {list.check === "radio1" ? "일반식" : "다식"}
+                    </span>
+                  </div>
+                  {list.comment && (
+                    <p style={{ margin: "5px 0 0 0" }}>기타 : {list.comment}</p>
+                  )}
                 </div>
-                <p>{list.comment}</p>
-              </li>
+              </Col>
             ))}
-          </ul>
+          </Row>
         </ContentBox>
       </>
     );

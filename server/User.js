@@ -17,6 +17,9 @@ const userSchema = mongoose.Schema({
     type: String,
     maxLength: 5,
   },
+  part: {
+    type: String,
+  },
   role: {
     type: Number,
     default: 0,

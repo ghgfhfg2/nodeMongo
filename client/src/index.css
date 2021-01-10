@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap");
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-weight: 300;
+  font-family: "Noto Sans KR", sans-serif, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -13,4 +15,54 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.hidden {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.customRadio + label {
+  display: flex;
+  width: calc(50% - 5px);
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #555;
+  cursor: pointer;
+}
+.customRadio:checked + label {
+  color: #91d081;
+  border-color: #91d081;
+  border-width: 2px;
+}
+
+.customRadio + label svg {
+  width: 25px;
+  height: 25px;
+}
+.customRadio:checked + label span {
+  display: inline-block;
+  margin-left: 7px;
+}
+
+.radio-flex-box {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.radio-bot-box {
+  margin-top: 10px;
 }

@@ -6,6 +6,7 @@ import axios from "axios";
 import { getFormatDate } from "./Func";
 import Loading from "./Loading";
 import * as antIcon from "@ant-design/icons";
+import { Input } from "antd";
 
 export const ContentBox = styled.div`
   width: 100%;
@@ -68,26 +69,36 @@ function CheckPage() {
       <>
         <ContentBox>
           <form onSubmit={onSubmitHandler}>
-            <input
-              type="radio"
-              name="check"
-              id="radio1"
-              value="radio1"
-              onChange={onChageRadio}
-            />
-            <label htmlFor="radio1">radio1</label>
-            <input
-              type="radio"
-              name="check"
-              id="radio2"
-              value="radio2"
-              onChange={onChageRadio}
-            />
-            <label htmlFor="radio2">radio2</label>
-            <textarea value={Comment} onChange={onChangeComment}>
-              {Comment}
-            </textarea>
-            <button>submit</button>
+            <div className="radio-flex-box">
+              <input
+                className="customRadio hidden"
+                type="radio"
+                name="check"
+                id="radio1"
+                value="radio1"
+                onChange={onChageRadio}
+              />
+              <label htmlFor="radio1">일반식</label>
+              <input
+                className="customRadio hidden"
+                type="radio"
+                name="check"
+                id="radio2"
+                value="radio2"
+                onChange={onChageRadio}
+              />
+              <label htmlFor="radio2" style={{ marginRight: "0px" }}>
+                다식
+              </label>
+              <div className="radio-bot-box">
+                <Input
+                  value={Comment}
+                  placeholder="기타"
+                  onChange={onChangeComment}
+                />
+                <button>submit</button>
+              </div>
+            </div>
           </form>
         </ContentBox>
       </>

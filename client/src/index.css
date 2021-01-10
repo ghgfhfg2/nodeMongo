@@ -14,6 +14,12 @@
   overflow: hidden;
 }
 
+.ant-layout-header.header {
+  padding: 0 15px;
+}
+input::placeholder {
+  color: #aaa;
+}
 .customRadio + label {
   display: flex;
   width: calc(50% - 5px);
@@ -29,10 +35,10 @@
   cursor: pointer;
 }
 .customRadio:checked + label {
-  color: #81ca6e;
+  color: #75bf61;
   position: relative;
   border-width: 2px;
-  border-color: #81ca6e;
+  border-color: #75bf61;
 }
 .customRadio:checked + label.basic-lunch {
   border-color: #ff7946;
@@ -90,7 +96,7 @@ header a {
   color: #fff;
 }
 header a:hover {
-  color: #81ca6e;
+  color: #75bf61;
 }
 
 .ic-check {
@@ -103,7 +109,7 @@ header a:hover {
 .ic-check svg {
   width: 30px;
   height: 30px;
-  color: #81ca6e;
+  color: #75bf61;
   margin-right: 5px;
 }
 
@@ -113,7 +119,7 @@ header a:hover {
 .my-history .list {
   border-radius: 5px;
   border: 1px solid #ddd;
-  padding: 20px 20px 20px 25px;
+  padding: 25px 25px 25px 30px;
   margin: 5px 0;
   position: relative;
   overflow: hidden;
@@ -132,15 +138,37 @@ header a:hover {
   background: #ff5516;
 }
 .my-history .list.radio2::before {
-  background: #81ca6e;
+  background: #75bf61;
 }
 .my-history .list.radio1 {
   border-color: #ff5516;
 }
 .my-history .list.radio2 {
-  border-color: #81ca6e;
+  border-color: #75bf61;
 }
 .history-flex-box {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.my-history .list .date {
+  font-weight: 500;
+  color: #111;
+}
+.my-history .list .choice {
+  display: flex;
+  align-items: center;
+}
+.my-history .list .choice i {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  background: url(./img/fork_on.svg) center no-repeat;
+}
+.my-history .list.radio2 .choice i {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: url(./img/healthy-food_on.svg) center no-repeat;
 }

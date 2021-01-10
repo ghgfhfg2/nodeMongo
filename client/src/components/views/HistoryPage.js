@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { ContentBox } from "./CheckPage";
+import { BasicBtn, ContentBox } from "./CheckPage";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { getDateFormat } from "./Func";
 import Loading from "./Loading";
-import { Row, Col } from "antd";
+import { Row, Col, Popover } from "antd";
 
 function HistoryPage(props) {
   const user = useSelector((state) => state.user);
@@ -27,17 +27,36 @@ function HistoryPage(props) {
               <Col lg={8} md={12} xs={24} key={index}>
                 <div className={`list ${list.check}`}>
                   <div className="history-flex-box">
+                    <span className="choice">
+                      <i></i>
+                      {list.comment && (
+                        <Popover
+                          content={`                      
+                        ${list.comment}                      
+                      `}
+                          trigger="click"
+                        >
+                          <BasicBtn
+                            className="border gray"
+                            type="button"
+                            style={{
+                              marginLeft: "15px",
+                              width: "auto",
+                              padding: "0 10px",
+                              flexShrink: "0",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Commnet
+                          </BasicBtn>
+                        </Popover>
+                      )}
+                    </span>
                     <span className="date">
                       {getDateFormat(String(list.date), "xxxx-xx-xx")}(
                       {list.day})
                     </span>
-                    <span className="choice">
-                      {list.check === "radio1" ? "일반식" : "다식"}
-                    </span>
                   </div>
-                  {list.comment && (
-                    <p style={{ margin: "5px 0 0 0" }}>기타 : {list.comment}</p>
-                  )}
                 </div>
               </Col>
             ))}

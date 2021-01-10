@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
+import { BasicBtn, BasicInput, ContentBox } from "../CheckPage";
 
 function LoginPage(props) {
   const dispatch = useDispatch();
@@ -18,6 +19,15 @@ function LoginPage(props) {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
+    if (!Id) {
+      alert("아이디를 입력해 주세요.");
+      return;
+    }
+    if (!passWord) {
+      alert("비밀번호를 입력해 주세요.");
+      return;
+    }
+
     let body = {
       id: Id,
       password: passWord,
@@ -27,36 +37,40 @@ function LoginPage(props) {
       if (response.payload.loginSuccess) {
         props.history.push("/");
       } else {
-        alert("Error");
+        alert("아이디 혹은 비밀번호가 올바르지 않습니다.");
       }
     });
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
+    <ContentBox style={{ paddingTop: "50px" }}>
       <form
         onSubmit={onSubmitHandler}
         style={{
           display: "flex",
+          alignItems: "center",
           flexDirection: "column",
         }}
       >
-        <label>Id</label>
-        <input type="text" value={Id} onChange={onIdHandler} />
-        <label>password</label>
-        <input type="password" value={passWord} onChange={onPasswordHandler} />
-        <br />
-        <button type="submit">login</button>
+        <BasicInput
+          type="text"
+          placeholder="아이디"
+          value={Id}
+          onChange={onIdHandler}
+          style={{ marginBottom: "10px", width: "100%", maxWidth: "400px" }}
+        />
+        <BasicInput
+          placeholder="비밀번호"
+          type="password"
+          value={passWord}
+          onChange={onPasswordHandler}
+          style={{ marginBottom: "20px", width: "100%", maxWidth: "400px" }}
+        />
+        <BasicBtn type="submit" style={{ width: "100%", maxWidth: "400px" }}>
+          login
+        </BasicBtn>
       </form>
-    </div>
+    </ContentBox>
   );
 }
 

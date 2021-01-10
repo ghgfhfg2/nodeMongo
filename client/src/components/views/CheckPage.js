@@ -24,13 +24,25 @@ export const BasicInput = styled.input`
 export const BasicBtn = styled.button`
   width: 100%;
   height: 40px;
-  border: 1px solid #91d081;
+  border: 1px solid #75bf61;
   border-radius: 5px;
-  background: #91d081;
+  background: #75bf61;
   color: #fff;
   cursor: pointer;
   font-size: 15px;
   font-weight: 500;
+  &.border {
+    background: none;
+    color: #75bf61;
+    &.black {
+      color: #111;
+      border-color: #111;
+    }
+    &.gray {
+      color: #888;
+      border-color: #ddd;
+    }
+  }
 `;
 
 const currentDate = getFormatDate(new Date());
@@ -70,6 +82,11 @@ function CheckPage() {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    if (!radio) {
+      alert("식단을 선택해 주세요.");
+      return;
+    }
+
     let body = {
       check: radio,
       name: user.userData.name,

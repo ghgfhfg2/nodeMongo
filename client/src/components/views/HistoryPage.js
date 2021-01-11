@@ -22,10 +22,9 @@ function HistoryPage(props) {
     return (
       <>
         <ContentBox>
-          <Row className="my-history" gutter={10}>
+          <ul className="my-history">
             {History.map((list, index) => (
-              <Col lg={8} md={12} xs={24} key={index}>
-                <div className={`list ${list.check}`}>
+              <li className={`list ${list.check}`} key={index}>
                   <div className="history-flex-box">
                     <span className="choice">
                       <i></i>
@@ -54,13 +53,12 @@ function HistoryPage(props) {
                     </span>
                     <span className="date">
                       {getDateFormat(String(list.date), "xxxx-xx-xx")}(
-                      {list.day})
+                      {list.day}) {list.time.substring(0,2)+'시 '+list.time.substring(2,4)+"분"}
                     </span>
                   </div>
-                </div>
-              </Col>
+              </li>
             ))}
-          </Row>
+          </ul>
         </ContentBox>
       </>
     );

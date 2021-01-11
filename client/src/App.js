@@ -28,7 +28,7 @@ function App() {
           path="/history"
           component={Auth(HistoryPage, true)}
         ></Route>
-        <Route exact path="/admin" component={Auth(AdminPage, false, true)}></Route>
+        <Route exact path="/admin" component={Auth(AdminPage, true, true)}></Route>
       </Switch>
     </Router>
   );

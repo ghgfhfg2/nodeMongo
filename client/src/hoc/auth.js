@@ -17,7 +17,6 @@ export default function (SpecificComponent, option, adminRoute = null) {
         } else {
           if (adminRoute && !res.payload.isAdmin) {
             props.history.push("/");
-            alert("권한이 없습니다.")
             return;
           } else {
             if (!option) {

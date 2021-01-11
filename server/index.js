@@ -74,6 +74,7 @@ app.get("/api/users/auth", auth, (req, res) => {
     isAuth: true,
     id: req.user.id,
     name: req.user.name,
+    part: req.user.part,
     role: req.user.role,
   });
 });
@@ -136,7 +137,12 @@ app.post("/api/users/history", (req, res) => {
 
 app.post("/api/users/historyAll", (req, res) => {
   Check.find({ date: req.body.date })
-    .sort({ date: -1 })
+    .sort(
+       (req.body.sort === 'time') ? { time: -1 } : 
+       (req.body.sort === 'time2') ? { time: 1 } : 
+       (req.body.sort === 'name') ? {name: 1} : 
+       (req.body.sort === 'part') ? {part: 1} : { time: -1 }
+    )
     .exec((err, data) => {
       if (err) return res.status(400).json({ success: false, err });
       res.status(200).json({

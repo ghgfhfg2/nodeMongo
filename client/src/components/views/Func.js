@@ -26,7 +26,17 @@ export const getFormatDate = (date) => {
     day = day >= 10 ? day : "0" + day;
     let week = ["일", "월", "화", "수", "목", "금", "토"];
     let dayOfWeek = week[date.getDay()];
-    let hour = date.getHours();
-    let min = date.getMinutes();
-    return year + "" + month + "" + day + "|" + dayOfWeek + "|" + hour + ":" + min;
+    let hour = leadingZeros(date.getHours(),2);
+    let min = leadingZeros(date.getMinutes(),2);
+    function leadingZeros(n, digits) {
+        var zero = '';
+        n = n.toString();
+      
+        if (n.length < digits) {
+          for (let i = 0; i < digits - n.length; i++)
+            zero += '0';
+        }
+        return zero + n;
+      }
+    return year + "" + month + "" + day + "|" + dayOfWeek + "|" + hour + min;
   }

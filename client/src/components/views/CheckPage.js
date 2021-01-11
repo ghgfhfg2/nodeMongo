@@ -46,7 +46,6 @@ export const BasicBtn = styled.button`
 `;
 
 const currentDate = getFormatDate(new Date());
-console.log(currentDate);
 const dbDate = Number(currentDate.split("|")[0]);
 const dbDay = currentDate.split("|")[1];
 const dbTime = currentDate.split("|")[2];
@@ -67,6 +66,7 @@ function CheckPage() {
 
   useEffect(() => {
     if (user.userData) {
+      console.log(user.userData)
       axios.post("/api/users/checkData", user.userData).then((res) => {
         if (res.data.dataCheck && res.data.data) {
           const checkedDate = res.data.data.date;
@@ -92,6 +92,7 @@ function CheckPage() {
     let body = {
       check: radio,
       name: user.userData.name,
+      part: user.userData.part,
       id: user.userData.id,
       role: user.userData.role,
       date: dbDate,

@@ -91,7 +91,7 @@ function RegisterPage(props) {
         autoComplete="off"
         onSubmit={onSubmitHandler}
         style={{
-          display: "flex",
+          display: "flex",width:'100%',maxWidth:"500px",
           flexDirection: "column",
         }}
       >

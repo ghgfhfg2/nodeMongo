@@ -5,6 +5,7 @@ import axios from "axios";
 import Loading from "./Loading";
 import styled from "styled-components";
 import { Row, Col, Popover } from "antd";
+import { BasicSelect } from "./RegisterPage/RegisterPage";
 
 const CheckerBox = styled.div`
   display: ${(props) => (props.chkconfirm ? "block" : "none")};
@@ -16,24 +17,29 @@ const CheckerBox = styled.div`
   .flex-box{flex-direction:column;flex:1;
     dl{width:100%}    
     ul{display:flex;flex-wrap:wrap;}
-    li{margin-right:5px;margin-bottom:5px;padding:2px 5px 2px 10px;position:relative;border:1px solid #888}
-    li::before{content:"";display:inline-block;width:4px;height:100%;background:#888;position:absolute;left:0;top:0;}
+    li{margin-right:5px;margin-bottom:5px;padding:3px 5px 3px 10px;position:relative;border:1px solid #ddd;font-size:12px;font-weight:700}
+    li::before{content:"";display:inline-block;width:4px;height:calc(100% + 2px);background:#888;position:absolute;left:0;top:0;}
   }
 `;
 
 const currentDate = getFormatDate(new Date());
 const dbDate = Number(currentDate.split("|")[0]);
-const body = {
-  date: Number(currentDate.split("|")[0]),
-};
 function AdminPage() {
   const [History, setHistory] = useState();
+  const [SortValue, setSortValue] = useState("date1")
+  const HistorySort = (e) => {
+    setSortValue(e.target.value)
+  }  
+  const body = {
+    date: Number(currentDate.split("|")[0]),
+    sort: SortValue
+  };
   useEffect(() => {
     axios
       .post("/api/users/historyAll", body)
       .then((res) => res.data.data)
       .then((res) => setHistory(res));
-  }, []);
+  }, [SortValue]);
 
   const [UserAll, setUserAll] = useState();
   useEffect(() => {
@@ -63,7 +69,7 @@ function AdminPage() {
     return (
       <>
         <ContentBox>
-          <BasicBtn className="border" style={{maxWidth:'400px'}} type="button" onClick={CheckerHandler}>
+          <BasicBtn className="border" type="button" onClick={CheckerHandler}>
             명단확인
           </BasicBtn>
           <CheckerBox chkconfirm={ChkConfirm}>
@@ -76,19 +82,30 @@ function AdminPage() {
               <dt>체크 안한사람 :</dt>
               <dd>&nbsp;{NonChecker.length}명</dd>
             </dl>
-            <ul>
+            <ul style={{marginBottom:'0'}}>
               {NonChecker &&
                 NonChecker.map((list, index) => (
-                  <li key={index}>{list.name+`(${list.part})`}</li>
+                  <li key={index}>{list.name}
+                    <span style={{fontWeight:500}}>
+                    &nbsp;- {list.part}
+                    </span>
+                  </li>
                 ))}
             </ul>
             </div>
           </CheckerBox>
+          <div className="flex-box between a-center" style={{marginTop:'20px',marginBottom:"10px"}}>
           <h2 className="sub-h2">체크한 사람 목록</h2>
-          <Row className="my-history" gutter={10}>
+          <BasicSelect onChange={HistorySort} defaultValue="time" style={{width:'auto'}}>
+                  <option value="time">최신</option>
+                  <option value="time2">오래된</option>
+                  <option value="name">이름</option>
+                  <option value="part">부서</option>
+          </BasicSelect>
+          </div>
+          <ul className="my-history">
             {History.map((list, index) => (
-              <Col lg={8} md={12} xs={24} key={index}>
-                <div className={`list ${list.check}`}>
+              <li className={`list ${list.check}`} key={index}>
                   <div className="history-flex-box">
                     <span className="choice">
                       <i></i>
@@ -118,14 +135,13 @@ function AdminPage() {
                     <div className="checker-info">
                       <div className="name">{`${list.name}(${list.part})`}</div>
                       <span className="date">
-                        체크한 시간 : {list.time}
+                        체크한 시간 : {list.time.substring(0,2)+'시 '+list.time.substring(2,4)+"분"}
                       </span>
                     </div>
                   </div>
-                </div>
-              </Col>
+              </li>
             ))}
-          </Row>
+          </ul>
         </ContentBox>
       </>
     );

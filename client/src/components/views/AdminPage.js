@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { ContentBox } from "./CheckPage";
-import { getDateFormat, getFormatDate } from "./Func";
+import { BasicBtn, ContentBox } from "./CheckPage";
+import { getFormatDate } from "./Func";
 import axios from "axios";
 import Loading from "./Loading";
 import styled from "styled-components";
+import { Row, Col, Popover } from "antd";
 
 const CheckerBox = styled.div`
   display: ${(props) => (props.chkconfirm ? "block" : "none")};
+  margin:10px 0;
+  dl{
+    display:flex;margin-bottom:0;
+  }
+  dt{font-weight:700}
+  .flex-box{flex-direction:column;flex:1;
+    dl{width:100%}    
+    ul{display:flex;flex-wrap:wrap;}
+    li{margin-right:5px;margin-bottom:5px;padding:2px 5px 2px 10px;position:relative;border:1px solid #888}
+    li::before{content:"";display:inline-block;width:4px;height:100%;background:#888;position:absolute;left:0;top:0;}
+  }
 `;
 
 const currentDate = getFormatDate(new Date());
@@ -44,48 +56,76 @@ function AdminPage() {
     });
     setChecker(Chk);
     setNonChecker(nonChk);
-    setChkConfirm(true);
+    setChkConfirm(!ChkConfirm);
   };
 
   if (History) {
     return (
       <>
         <ContentBox>
-          <button type="button" onClick={CheckerHandler}>
+          <BasicBtn className="border" style={{maxWidth:'400px'}} type="button" onClick={CheckerHandler}>
             명단확인
-          </button>
+          </BasicBtn>
           <CheckerBox chkconfirm={ChkConfirm}>
             <dl>
-              <dt>전체</dt>
-              <dd>{UserAll && UserAll.length}</dd>
+              <dt>전체 :</dt>
+              <dd>&nbsp;{UserAll && UserAll.length}명</dd>
             </dl>
+            <div className="flex-box">
             <dl>
-              <dt>체크한사람/안한사람</dt>
-              <dd>
-                {Checker.length}/{NonChecker.length}
-              </dd>
+              <dt>체크 안한사람 :</dt>
+              <dd>&nbsp;{NonChecker.length}명</dd>
             </dl>
             <ul>
               {NonChecker &&
                 NonChecker.map((list, index) => (
-                  <li key={index}>{list.name}</li>
+                  <li key={index}>{list.name+`(${list.part})`}</li>
                 ))}
             </ul>
+            </div>
           </CheckerBox>
-          <ul className="myinfo">
+          <h2 className="sub-h2">체크한 사람 목록</h2>
+          <Row className="my-history" gutter={10}>
             {History.map((list, index) => (
-              <li key={index}>
-                <div>
-                  <span className="name">{list.name}</span>
-                  <span className="date">
-                    {getDateFormat(String(list.date), "xxxx-xx-xx")}({list.day})
-                  </span>
-                  <span className="choice">{list.check}</span>
+              <Col lg={8} md={12} xs={24} key={index}>
+                <div className={`list ${list.check}`}>
+                  <div className="history-flex-box">
+                    <span className="choice">
+                      <i></i>
+                      {list.comment && (
+                        <Popover
+                          content={`                      
+                        ${list.comment}                      
+                      `}
+                          trigger="click"
+                        >
+                          <BasicBtn
+                            className="border gray"
+                            type="button"
+                            style={{
+                              marginLeft: "15px",
+                              width: "auto",
+                              padding: "0 10px",
+                              flexShrink: "0",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Commnet
+                          </BasicBtn>
+                        </Popover>
+                      )}
+                    </span>
+                    <div className="checker-info">
+                      <div className="name">{`${list.name}(${list.part})`}</div>
+                      <span className="date">
+                        체크한 시간 : {list.time}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <p>{list.comment}</p>
-              </li>
+              </Col>
             ))}
-          </ul>
+          </Row>
         </ContentBox>
       </>
     );

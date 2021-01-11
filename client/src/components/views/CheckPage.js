@@ -46,8 +46,10 @@ export const BasicBtn = styled.button`
 `;
 
 const currentDate = getFormatDate(new Date());
+console.log(currentDate);
 const dbDate = Number(currentDate.split("|")[0]);
 const dbDay = currentDate.split("|")[1];
+const dbTime = currentDate.split("|")[2];
 function CheckPage() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -94,6 +96,7 @@ function CheckPage() {
       role: user.userData.role,
       date: dbDate,
       day: dbDay,
+      time: dbTime,
       comment: Comment,
     };
     dispatch(check(body)).then((res) => {});

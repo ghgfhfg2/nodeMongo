@@ -18,6 +18,9 @@ const checkSchema = mongoose.Schema({
   day: {
     type: String,
   },
+  time: {
+    type: String,
+  },
   check: {
     type: String,
   },

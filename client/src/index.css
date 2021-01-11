@@ -13,7 +13,10 @@
   opacity: 0;
   overflow: hidden;
 }
-
+.flex-box{display: flex;}
+.flex-box.between{justify-content: space-between;}
+.flex-box.j-center{justify-content: center;}
+.flex-box.a-center{align-items: center;}
 .ant-layout-header.header {
   padding: 0 15px;
 }
@@ -112,7 +115,8 @@ header a:hover {
   color: #75bf61;
   margin-right: 5px;
 }
-
+.ic-loading svg{width:40px;height: 40px;}
+.sub-h2{font-size: 18px;font-weight: 700;margin-top: 20px;margin-bottom: 5px;}
 .my-history {
   width: 100%;
 }
@@ -151,9 +155,15 @@ header a:hover {
   justify-content: space-between;
   align-items: center;
 }
+.my-history .list .checker-info{
+  text-align: right;
+}
+.my-history .list .name{
+  font-weight: 700;color: #111;
+}
 .my-history .list .date {
-  font-weight: 500;
-  color: #111;
+  color: #888;font-weight: 500;
+  font-size: 12px;
 }
 .my-history .list .choice {
   display: flex;
@@ -172,3 +182,7 @@ header a:hover {
   height: 35px;
   background: url(./img/healthy-food_on.svg) center no-repeat;
 }
+
+.join-box{display: flex;justify-content: center;}
+.join-box .flex-box{margin-bottom: 12px;}
+.join-box .flex-box label{width:140px;font-size: 13px;font-weight: 700;color: #333;}

@@ -4,7 +4,7 @@ import * as antIcon from "@ant-design/icons";
 function Loading() {
   return (
     <div className="center-box">
-      <antIcon.LoadingOutlined />
+      <antIcon.LoadingOutlined className="ic-loading" />
     </div>
   );
 }

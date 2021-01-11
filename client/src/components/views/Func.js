@@ -26,5 +26,7 @@ export const getFormatDate = (date) => {
     day = day >= 10 ? day : "0" + day;
     let week = ["일", "월", "화", "수", "목", "금", "토"];
     let dayOfWeek = week[date.getDay()];
-    return year + "" + month + "" + day + "|" + dayOfWeek;
+    let hour = date.getHours();
+    let min = date.getMinutes();
+    return year + "" + month + "" + day + "|" + dayOfWeek + "|" + hour + ":" + min;
   }

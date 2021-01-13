@@ -4,7 +4,7 @@ import { API_SERVER } from "../Config"
 
 export function loginUser(dataToSubmit) {
   
-  const request = Axios.post(`${API_SERVER}/api/users/login`, dataToSubmit).then(
+  const request = Axios.get(`${API_SERVER}/api/users/login`, dataToSubmit,{ withCredentials: true }).then(
     (response) => response.data
   );  
   return {
@@ -24,7 +24,7 @@ export function joinUser(dataToSubmit) {
 }
 
 export function auth() {
-  const request = Axios.get(`${API_SERVER}/api/users/auth`).then(
+  const request = Axios.get(`${API_SERVER}/api/users/auth`,{ withCredentials: true }).then(
     (response) => {
       console.log(response)
       return response.data

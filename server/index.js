@@ -25,7 +25,10 @@ monggoose
   })
   .then(() => console.log("MongoDb Connected..."))
   .catch((err) => console.log(err));
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
 
 app.get("/api/hello", (req, res) => {
   res.send("안녕하세요~");
@@ -42,7 +45,7 @@ app.post("/api/users/register", (req, res) => {
   });
 });
 
-app.post("/api/users/login", (req, res) => {
+app.get("/api/users/login", (req, res) => {
   User.findOne({ id: req.body.id }, (err, user) => {
     if (!user) {
       return res.json({
@@ -162,6 +165,8 @@ app.get("/api/users/userNormal", (req, res) => {
     });
   });
 });
+
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 

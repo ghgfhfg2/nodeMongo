@@ -6,6 +6,7 @@ import axios from "axios";
 import { getFormatDate } from "./Func";
 import Loading from "./Loading";
 import * as antIcon from "@ant-design/icons";
+import { API_SERVER } from "../../Config"
 
 export const ContentBox = styled.div`
   width: 100%;
@@ -66,8 +67,7 @@ function CheckPage() {
 
   useEffect(() => {
     if (user.userData) {
-      console.log(user.userData)
-      axios.post("/api/users/checkData", user.userData).then((res) => {
+      axios.post(`${API_SERVER}/api/users/checkData`, user.userData).then((res) => {
         if (res.data.dataCheck && res.data.data) {
           const checkedDate = res.data.data.date;
           if (dbDate == checkedDate) {
@@ -101,7 +101,7 @@ function CheckPage() {
       comment: Comment,
     };
     dispatch(check(body)).then((res) => {});
-    axios.post("/api/users/lastCheck", body).then((res) => console.log(res));
+    axios.post(`${API_SERVER}/api/users/lastCheck`, body).then((res) => console.log(res));
   };
   if (Checked === "none") {
     return (

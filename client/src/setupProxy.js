@@ -2,8 +2,9 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (app) {
   app.use(
-    createProxyMiddleware("/api", {
-      target: "http://localhost:5000",
+    "/api",
+    createProxyMiddleware({
+      target: "http://react.smartq.kr:5000",
       changeOrigin: true,
     })
   );

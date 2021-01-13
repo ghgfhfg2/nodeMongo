@@ -3,9 +3,10 @@ import { LOGIN_USER, JOIN_USER, AUTH_USER, CHECK_USER } from "./types";
 import { API_SERVER } from "../Config"
 
 export function loginUser(dataToSubmit) {
+  
   const request = Axios.post(`${API_SERVER}/api/users/login`, dataToSubmit).then(
     (response) => response.data
-  );
+  );  
   return {
     type: LOGIN_USER,
     payload: request,
@@ -24,7 +25,10 @@ export function joinUser(dataToSubmit) {
 
 export function auth() {
   const request = Axios.get(`${API_SERVER}/api/users/auth`).then(
-    (response) => response.data
+    (response) => {
+      console.log(response)
+      return response.data
+    }
   );
   return {
     type: AUTH_USER,

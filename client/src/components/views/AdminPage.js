@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import styled from "styled-components";
 import { Row, Col, Popover } from "antd";
 import { BasicSelect } from "./RegisterPage/RegisterPage";
+import { API_SERVER } from "../../Config"
 
 const CheckerBox = styled.div`
   display: ${(props) => (props.chkconfirm ? "block" : "none")};
@@ -36,7 +37,7 @@ function AdminPage() {
   };
   useEffect(() => {
     axios
-      .post("/api/users/historyAll", body)
+      .post(`${API_SERVER}/api/users/historyAll`, body)
       .then((res) => res.data.data)
       .then((res) => setHistory(res));
   }, [SortValue]);
@@ -44,7 +45,7 @@ function AdminPage() {
   const [UserAll, setUserAll] = useState();
   useEffect(() => {
     axios
-      .get("/api/users/userNormal")
+      .get(`${API_SERVER}/api/users/userNormal`)
       .then((res) => res.data.data)
       .then((res) => setUserAll(res));
   }, []);

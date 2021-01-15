@@ -38,7 +38,7 @@ monggoose
   .catch((err) => console.log(err));
 
 app.use(cors({
-  origin: "https://react.smartq.kr",
+  origin: "http://react.smartq.kr",
   credentials: true
 }));
 
@@ -178,9 +178,9 @@ app.get("/api/users/userNormal", (req, res) => {
 });
 
 
-//app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-https.createServer(options, app).listen(port, function() {
-  console.log("Https server listening on port " + port);
-});
+//https.createServer(options, app).listen(port, function() {
+//  console.log("Https server listening on port " + port);
+//});
 

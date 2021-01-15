@@ -1,4 +1,14 @@
 const express = require("express");
+
+const https =require("https");
+const fs = require("fs");
+
+const options = {
+    key: fs.readFileSync(__dirname+'/fake-keys/key.pem'),
+    cert: fs.readFileSync(__dirname+'/fake-keys/cert.pem')
+};
+console.log(__dirname)
+
 const app = express();
 const port = 5000;
 const bodyParser = require("body-parser");
@@ -10,6 +20,7 @@ const { auth } = require("./middleware/auth");
 
 const { User } = require("./User");
 const { Check } = require("./Check");
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,7 +36,11 @@ monggoose
   })
   .then(() => console.log("MongoDb Connected..."))
   .catch((err) => console.log(err));
-app.use(cors());
+
+app.use(cors({
+  origin: "https://react.smartq.kr",
+  credentials: true
+}));
 
 app.get("/api/hello", (req, res) => {
   res.send("안녕하세요~");
@@ -162,4 +177,10 @@ app.get("/api/users/userNormal", (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+//app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+https.createServer(options, app).listen(port, function() {
+  console.log("Https server listening on port " + port);
+});
+

@@ -1,5 +1,5 @@
 import React from "react";
-import { USER_SERVER } from "../../../Config";
+import { API_SERVER } from "../../../Config";
 import { withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -8,7 +8,7 @@ function RightMenu(props) {
 
   const onLogout = () => {
     axios
-      .get(`${USER_SERVER}/logout`)
+      .get(`${API_SERVER}/api/users/logout`,{ withCredentials: true })
       .then((res) =>
         res.data.success
           ? props.history.push("/login")

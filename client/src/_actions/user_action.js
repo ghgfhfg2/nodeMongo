@@ -1,8 +1,9 @@
 import Axios from "axios";
 import { LOGIN_USER, JOIN_USER, AUTH_USER, CHECK_USER } from "./types";
+import { API_SERVER } from "../Config"
 
 export function loginUser(dataToSubmit) {
-  const request = Axios.post("/api/users/login", dataToSubmit).then(
+  const request = Axios.post(`${API_SERVER}/api/users/login`, dataToSubmit,{ withCredentials: true }).then(
     (response) => response.data
   );
   return {
@@ -12,7 +13,7 @@ export function loginUser(dataToSubmit) {
 }
 
 export function joinUser(dataToSubmit) {
-  const request = Axios.post("/api/users/register", dataToSubmit).then(
+  const request = Axios.post(`${API_SERVER}/api/users/register`, dataToSubmit).then(
     (response) => response.data
   );
   return {
@@ -22,7 +23,7 @@ export function joinUser(dataToSubmit) {
 }
 
 export function auth() {
-  const request = Axios.get("/api/users/auth").then(
+  const request = Axios.get(`${API_SERVER}/api/users/auth`,{ withCredentials: true }).then(
     (response) => response.data
   );
   return {
@@ -32,7 +33,7 @@ export function auth() {
 }
 
 export function check(dataToSubmit) {
-  const request = Axios.post("/api/users/check", dataToSubmit).then(
+  const request = Axios.post(`${API_SERVER}/api/users/check`, dataToSubmit).then(
     (response) => response.data
   );
   return {

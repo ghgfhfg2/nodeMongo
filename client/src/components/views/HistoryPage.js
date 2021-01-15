@@ -5,6 +5,7 @@ import axios from "axios";
 import { getDateFormat } from "./Func";
 import Loading from "./Loading";
 import { Row, Col, Popover } from "antd";
+import { API_SERVER } from "../../Config"
 
 function HistoryPage(props) {
   const user = useSelector((state) => state.user);
@@ -12,7 +13,7 @@ function HistoryPage(props) {
   useEffect(() => {
     if (user.userData) {
       axios
-        .post("/api/users/history", user.userData)
+        .post(`${API_SERVER}/api/users/history`, user.userData)
         .then((res) => res.data.data)
         .then((res) => setHistory(res));
     }

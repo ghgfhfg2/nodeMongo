@@ -1,4 +1,0 @@
-export const LOGIN_USER = "login_user";
-export const JOIN_USER = "join_user";
-export const AUTH_USER = "auth_user";
-export const CHECK_USER = "check_user";

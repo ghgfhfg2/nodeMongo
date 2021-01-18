@@ -77,7 +77,6 @@ function AdminPage() {
     formData.append('file', Image);
     // 서버의 upload API 호출
     const res = await axios.post(`${API_SERVER}/api/users/upload`, formData);
-    console.log(res);
   }
   const [LunchImg, setLunchImg] = useState()
   useEffect(() => {
@@ -98,8 +97,7 @@ function AdminPage() {
               이미지 업로드
             </BasicBtn>
           </form>
-          <img src={`/uploads/${LunchImg}`} /> 
-          {LunchImg && LunchImg}         
+          <img src={`${API_SERVER}/images/${LunchImg}`} /> 
           <BasicBtn className="border" type="button" onClick={CheckerHandler}>
             명단확인
           </BasicBtn>

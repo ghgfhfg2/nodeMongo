@@ -47,7 +47,7 @@ const upload = multer({
   }),
 });
 app.post("/api/users/upload", upload.single('file'), (req, res) => {
-  const image = new Image(req.file);
+  const image = new Image({...req.file,type:"lunch"});
   console.log(req.file)
   image.save(
     (err, image) => {

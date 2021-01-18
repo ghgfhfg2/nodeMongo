@@ -98,7 +98,7 @@ function AdminPage() {
               이미지 업로드
             </BasicBtn>
           </form>
-          <img src={`/images/${LunchImg}`} /> 
+          <img src={`/uploads/${LunchImg}`} /> 
           {LunchImg && LunchImg}         
           <BasicBtn className="border" type="button" onClick={CheckerHandler}>
             명단확인

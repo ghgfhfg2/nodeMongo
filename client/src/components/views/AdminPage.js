@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { Popover } from "antd";
 import { BasicSelect } from "./RegisterPage/RegisterPage";
 import { API_SERVER } from "../../Config"
+import SkeletonImage from "antd/lib/skeleton/Image";
 
 const CheckerBox = styled.div`
   display: ${(props) => (props.chkconfirm ? "block" : "none")};
@@ -66,10 +67,39 @@ function AdminPage() {
     setChkConfirm(!ChkConfirm);
   };
 
+  const [Image, setImage] = useState()
+  const onFileChange = (e) => {
+    console.log(e.target.files[0])
+    setImage(e.target.files[0])
+  }
+  const imgUpload = async () => {
+    const formData = new FormData();
+    formData.append('file', Image);
+    // 서버의 upload API 호출
+    const res = await axios.post(`${API_SERVER}/api/users/upload`, formData);
+    console.log(res);
+  }
+  const [LunchImg, setLunchImg] = useState()
+  useEffect(() => {
+    axios.get(`${API_SERVER}/api/users/getLunchImg`)
+    .then(res => {
+      console.log(res.data.img[0].originalname)
+      setLunchImg(res.data.img[0].originalname)
+    })
+  }, [LunchImg])
+
   if (History) {
     return (
       <>
         <ContentBox>
+          <form action='upload' method='post' encType="multipart/form-data" style={{ display: 'flex' }}>
+            <input className="border" style={{marginBottom:"10px"}} type="file" onChange={onFileChange} /> 
+            <BasicBtn className="border" type="button" onClick={imgUpload}>
+              이미지 업로드
+            </BasicBtn>
+          </form>
+          <img src={`/images/${LunchImg}`} /> 
+          {LunchImg && LunchImg}         
           <BasicBtn className="border" type="button" onClick={CheckerHandler}>
             명단확인
           </BasicBtn>

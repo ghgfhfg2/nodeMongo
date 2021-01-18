@@ -26,7 +26,6 @@ export function joinUser(dataToSubmit) {
 export function auth() {
   const request = Axios.get(`${API_SERVER}/api/users/auth`,{ withCredentials: true }).then(
     (response) => {
-      console.log(response)
       return response.data
     }
   );

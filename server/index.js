@@ -10,6 +10,7 @@ const { auth } = require("./middleware/auth");
 
 const { User } = require("./User");
 const { Check } = require("./Check");
+const { Image } = require("./Images");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,6 +34,42 @@ app.use(cors({
 app.get("/api/hello", (req, res) => {
   res.send("안녕하세요~");
 });
+
+var multer = require('multer'); // express에 multer모듈 적용 (for 파일업로드)
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    }
+  }),
+});
+app.post("/api/users/upload", upload.single('file'), (req, res) => {
+  const image = new Image(req.file);
+  console.log(req.file)
+  image.save(
+    (err, image) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).send({
+        success: true,
+      });
+    }
+  );
+});
+app.use('/images', express.static('uploads'));
+
+app.get("/api/users/getLunchImg", (req, res) => {
+  Image.find()
+  .exec((err, img) => {
+    res.status(200).json({
+      img
+    })
+  })
+})
+
+
 
 app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
@@ -71,7 +108,6 @@ app.get("/api/users/login", (req, res) => {
 });
 
 app.get("/api/users/auth", auth, (req, res) => {
-  console.log(req.user)
   res.status(200).json({
     _id: req.user._id,
     isAdmin: req.user.role === 0 ? false : true,
@@ -165,7 +201,6 @@ app.get("/api/users/userNormal", (req, res) => {
     });
   });
 });
-
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

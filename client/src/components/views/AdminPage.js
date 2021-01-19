@@ -26,6 +26,9 @@ const FileLabel = styled.label`
   display:flex;width:60px;height:60px;border:1px solid #ddd;
   border-radius:5px;flex-shrink:0;justify-content:center;align-items:center;
   font-size:12px;color:#888;
+  img{
+    max-height:100%;
+  }
 `
 
 const currentDate = getFormatDate(new Date());
@@ -96,15 +99,19 @@ function AdminPage() {
     const formData = new FormData();
     formData.append('file', Image);
     // 서버의 upload API 호출
-    const res = await axios.post(`${API_SERVER}/api/users/upload`, formData);
-    console.log(Image.name)
+    const res = await axios.post(`${API_SERVER}/api/users/upload`, formData)
+    .then(res => {
+      alert('식단표 업로드 완료')
+    });
   }
   const imgUpload2 = async () => {
     const formData = new FormData();
     formData.append('file', Image2);
     // 서버의 upload API 호출
-    const res = await axios.post(`${API_SERVER}/api/users/upload2`, formData);
-    console.log(Image2.name)
+    const res = await axios.post(`${API_SERVER}/api/users/upload2`, formData)
+    .then(res => {
+      alert('체크표 업로드 완료')
+    });
   }
 
 
@@ -144,16 +151,23 @@ function AdminPage() {
               <dt>체크 안한사람 :</dt>
               <dd>&nbsp;{NonChecker.length}명</dd>
             </dl>
-            <ul style={{marginBottom:'0'}}>
+            <table className="admin-table" style={{marginBottom:'0'}}>
+              <thead>
+                <tr>
+                  <th scope="col">이름</th>
+                  <th scope="col">부서</th>
+                </tr>
+              </thead>
+              <tbody>
               {NonChecker &&
                 NonChecker.map((list, index) => (
-                  <li key={index}>{list.name}
-                    <span style={{fontWeight:500}}>
-                    &nbsp;- {list.part}
-                    </span>
-                  </li>
-                ))}
-            </ul>
+                  <tr key={index}>
+                    <td>{list.name}</td>
+                    <td>{list.part}</td>
+                  </tr>
+                ))}             
+                </tbody>
+            </table>
             </div>
           </CheckerBox>
           <div className="flex-box between a-center" style={{marginTop:'20px',marginBottom:"10px"}}>

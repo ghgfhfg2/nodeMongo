@@ -87,12 +87,13 @@ function RegisterPage(props) {
   };
   return (
     <ContentBox className="join-box">
+      <h2 className="sub-h2 center mb">회원가입</h2>
       <form
         autoComplete="off"
         onSubmit={onSubmitHandler}
         style={{
           display: "flex",width:'100%',maxWidth:"500px",
-          flexDirection: "column",
+          flexDirection: "column",margin:"0 auto"
         }}
       >
         <div className="flex-box a-center">

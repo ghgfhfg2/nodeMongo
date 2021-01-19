@@ -1,3 +1,4 @@
+.ant-layout-header{background: #4fa138 !important;}
 .center-box {
   width: 100%;
   height: calc(100vh - 64px);
@@ -18,7 +19,7 @@ ol,ul,dl{margin-bottom:0}
 .flex-box.j-center{justify-content: center;}
 .flex-box.a-center{align-items: center;}
 .ant-layout-header.header {
-  padding: 0 15px;
+  padding: 0 15px;font-size: 12px;font-weight: 700;
 }
 input::placeholder {
   color: #aaa;
@@ -116,7 +117,9 @@ header a:hover {
   margin-right: 5px;
 }
 .ic-loading svg{width:40px;height: 40px;}
-.sub-h2{font-size: 18px;font-weight: 700;margin:0}
+.sub-h2{font-size: 18px;font-weight: 700;margin:0;color: #333;}
+.sub-h2.center{text-align: center;}
+.sub-h2.center.mb{margin-bottom: 20px;}
 .my-history {
   width: 100%;display: flex;flex-wrap: wrap;
 }
@@ -194,7 +197,6 @@ header a:hover {
   
 }
 
-.join-box{display: flex;justify-content: center;}
 .join-box .flex-box{margin-bottom: 12px;}
 .join-box .flex-box label{width:140px;font-size: 13px;font-weight: 700;color: #333;}
 
@@ -210,4 +212,8 @@ header a:hover {
 
 .check-img-box{text-align: center;margin: 0 auto 20px auto;max-width: 600px;}
 .check-img-box .flex-box{margin-bottom: 10px;}
+
+.admin-table{max-width: 400px;margin: 0;}
+.admin-table th,
+.admin-table td{text-align: center;}
 

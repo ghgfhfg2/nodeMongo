@@ -19,10 +19,10 @@ function RightMenu(props) {
     return (
       <>
         <a href="/register" style={{ marginRight: "10px" }}>
-          join
+          회원가입
         </a>
         <a href="/login" style={{ marginRight: "10px" }}>
-          login
+          로그인
         </a>
       </>
     );
@@ -31,10 +31,10 @@ function RightMenu(props) {
       return (
         <>
           <a href="/admin" style={{ marginRight: "10px" }}>
-            admin
+            관리자
           </a>
           <a href="/" style={{ marginRight: "10px" }} onClick={onLogout}>
-            logout
+            로그아웃
           </a>
         </>
       );
@@ -42,7 +42,7 @@ function RightMenu(props) {
       return (
         <>
           <a href="/" style={{ marginRight: "10px" }} onClick={onLogout}>
-            logout
+          로그아웃
           </a>
         </>
       );

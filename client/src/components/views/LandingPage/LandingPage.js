@@ -39,7 +39,7 @@ function LandingPage(props) {
           style={{
             display: "flex",
             justifyContent: "center",
-            paddingTop: "50px",
+            paddingTop: "30px",
           }}
         >
           <LandingLink href="/check">

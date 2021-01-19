@@ -44,6 +44,7 @@ function LoginPage(props) {
 
   return (
     <ContentBox style={{ paddingTop: "50px" }}>
+      <h2 className="sub-h2 center mb">로그인</h2>
       <form
         onSubmit={onSubmitHandler}
         style={{

@@ -104,7 +104,7 @@ app.post("/api/users/register", (req, res) => {
   });
 });
 
-app.get("/api/users/login", (req, res) => {
+app.post("/api/users/login", (req, res) => {
   User.findOne({ id: req.body.id }, (err, user) => {
     if (!user) {
       return res.json({
@@ -187,7 +187,7 @@ app.post("/api/users/checkData", (req, res) => {
 
 app.post("/api/users/history", (req, res) => {
   Check.find({ id: req.body.id })
-    .sort({ date: -1 })
+    .sort({ date: -1 }).limit(20)
     .exec((err, data) => {
       if (err) return res.status(400).json({ success: false, err });
       res.status(200).json({

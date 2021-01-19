@@ -6,7 +6,20 @@ import { getDateFormat } from "./Func";
 import Loading from "./Loading";
 import { Popover } from "antd";
 import { API_SERVER } from "../../Config"
+import styled from "styled-components";
 
+const CheckChart = styled.div`
+  width:100%;height:20px;display:flex;border-radius:4px;overflow:hidden;
+  div{
+    height:100%;position:relative;font-size:12px;color:#fff;text-align:center;
+  }
+  .chk1{
+    background:#ff5516;
+  }
+  .chk2{
+    background:#75bf61;
+   }
+`
 function HistoryPage(props) {
   const user = useSelector((state) => state.user);
   const [History, setHistory] = useState();
@@ -20,9 +33,24 @@ function HistoryPage(props) {
   }, [user]);
 
   if (History) {
+    const AllCount = History.length
+    const chkCount1 = History.filter(el => el.check === 'radio1').length
+    const chkCount2 = History.filter(el => el.check === 'radio2').length
+    const chkPer1 = chkCount1/AllCount * 100
+    const chkPer2 = chkCount2/AllCount * 100
     return (
       <>
         <ContentBox>
+          <h4>{user.userData.name}님의 최근 4주간 식단횟수</h4>
+          <CheckChart style={{marginBottom:'20px'}}>            
+            <div className="chk1" style={{width:`${chkPer1}%`}}>
+              <span>{chkCount1}회</span>
+            </div>
+            <div className="chk2" style={{width:`${chkPer2}%`}}>
+            <span>{chkCount2}회</span>
+            </div>
+          </CheckChart>
+          <h4>{user.userData.name}님의 최근 4주간 식단체크</h4>
           <ul className="my-history">
             {History.map((list, index) => (
               <li className={`list ${list.check}`} key={index}>

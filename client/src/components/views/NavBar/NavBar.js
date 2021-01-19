@@ -10,10 +10,10 @@ function NavBar(props) {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             <a style={{ marginRight: "15px" }} href="/">
-              home
+              홈
             </a>
-            <a style={{ marginRight: "15px" }} href="/check">check</a>
-            <a style={{ marginRight: "15px" }} href="/history">history</a>
+            <a style={{ marginRight: "15px" }} href="/check">식단체크</a>
+            <a style={{ marginRight: "15px" }} href="/history">체크내역</a>
           </div>
           <div>
             <RightMenu />

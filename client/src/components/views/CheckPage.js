@@ -103,10 +103,47 @@ function CheckPage() {
     dispatch(check(body)).then((res) => {});
     axios.post(`${API_SERVER}/api/users/lastCheck`, body).then((res) => console.log(res));
   };
+
+  
+  const [GetLunchImg, setGetLunchImg] = useState()
+  useEffect(() => {
+    axios.get(`${API_SERVER}/api/users/getLunchImg`)
+    .then(res => {
+      setGetLunchImg(res.data.img.originalname)
+    })
+  }, [GetLunchImg])
+
+  const [GetCheckhImg, setGetCheckhImg] = useState()
+  useEffect(() => {
+    axios.get(`${API_SERVER}/api/users/getCheckImg`)
+    .then(res => {
+      setGetCheckhImg(res.data.img.originalname)
+    })
+  }, [GetCheckhImg])
+
+  const [CheckImg, setCheckImg] = useState(false)
+  const onCheckImg = () => {
+    setCheckImg(!CheckImg)
+    setCheckImg2(false)
+  }
+  const [CheckImg2, setCheckImg2] = useState(false)
+  const onCheckImg2 = () => {
+    setCheckImg(false)
+    setCheckImg2(!CheckImg2)
+  }
+
   if (Checked === "none") {
     return (
       <>
         <ContentBox>
+          <div className="check-img-box">
+            <div className="flex-box">
+              <BasicBtn onClick={onCheckImg} style={{marginRight:"10px"}}>식단표 확인</BasicBtn>
+              <BasicBtn onClick={onCheckImg2}>체크표 확인</BasicBtn>
+            </div>
+            {CheckImg && <img src={`${API_SERVER}/images/${GetLunchImg}`}/>}
+            {CheckImg2 && <img src={`${API_SERVER}/images/${GetCheckhImg}`}/>}
+          </div>
           <form onSubmit={onSubmitHandler}>
             <div className="radio-flex-box">
               <input

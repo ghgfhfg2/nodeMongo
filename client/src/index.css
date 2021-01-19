@@ -85,7 +85,7 @@ input::placeholder {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   justify-content: center;
 }
@@ -191,10 +191,23 @@ header a:hover {
     width:calc(33.333% - 8px);margin-right: 12px;
   }
   .my-history .list:nth-child(3n+3){margin-right: 0;}
+  
 }
 
 .join-box{display: flex;justify-content: center;}
 .join-box .flex-box{margin-bottom: 12px;}
 .join-box .flex-box label{width:140px;font-size: 13px;font-weight: 700;color: #333;}
 
+.admin-form{
+  display: flex;align-items: center;margin-bottom: 10px;max-width: 50%;
+}
+@media all and (max-width:640px){
+  .admin-form{max-width: 100%;}
+}
+
+.custom-file{position:absolute;width:0;height: 0;overflow: hidden;}
+
+
+.check-img-box{text-align: center;margin: 0 auto 20px auto;max-width: 600px;}
+.check-img-box .flex-box{margin-bottom: 10px;}
 

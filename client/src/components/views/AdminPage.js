@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { Popover } from "antd";
 import { BasicSelect } from "./RegisterPage/RegisterPage";
 import { API_SERVER } from "../../Config"
-import SkeletonImage from "antd/lib/skeleton/Image";
 
 const CheckerBox = styled.div`
   display: ${(props) => (props.chkconfirm ? "block" : "none")};
@@ -23,6 +22,11 @@ const CheckerBox = styled.div`
     li::before{content:"";display:inline-block;width:4px;height:calc(100% + 2px);background:#888;position:absolute;left:0;top:0;}
   }
 `;
+const FileLabel = styled.label`
+  display:flex;width:60px;height:60px;border:1px solid #ddd;
+  border-radius:5px;flex-shrink:0;justify-content:center;align-items:center;
+  font-size:12px;color:#888;
+`
 
 const currentDate = getFormatDate(new Date());
 const dbDate = Number(currentDate.split("|")[0]);
@@ -68,36 +72,65 @@ function AdminPage() {
   };
 
   const [Image, setImage] = useState()
+  const [Image2, setImage2] = useState()
+  const [LunchImg, setLunchImg] = useState()
+  const [LunchImg2, setLunchImg2] = useState()
   const onFileChange = (e) => {
-    console.log(e.target.files[0])
+    let reader = new FileReader();
+    reader.onload = function(event) { 
+      setLunchImg(event.target.result); 
+    }; 
+    reader.readAsDataURL(e.target.files[0]);
     setImage(e.target.files[0])
   }
+  const onFileChange2 = (e) => {
+    let reader = new FileReader();
+    reader.onload = function(event) { 
+      setLunchImg2(event.target.result); 
+    }; 
+    reader.readAsDataURL(e.target.files[0]);
+    setImage2(e.target.files[0])
+    //setLunchImg2(e.target.files[0].name)
+  }  
   const imgUpload = async () => {
     const formData = new FormData();
     formData.append('file', Image);
     // 서버의 upload API 호출
     const res = await axios.post(`${API_SERVER}/api/users/upload`, formData);
+    console.log(Image.name)
   }
-  const [LunchImg, setLunchImg] = useState()
-  useEffect(() => {
-    axios.get(`${API_SERVER}/api/users/getLunchImg`)
-    .then(res => {
-      console.log(res.data.img[0].originalname)
-      setLunchImg(res.data.img[0].originalname)
-    })
-  }, [LunchImg])
+  const imgUpload2 = async () => {
+    const formData = new FormData();
+    formData.append('file', Image2);
+    // 서버의 upload API 호출
+    const res = await axios.post(`${API_SERVER}/api/users/upload2`, formData);
+    console.log(Image2.name)
+  }
+
 
   if (History) {
     return (
       <>
         <ContentBox>
-          <form action='upload' method='post' encType="multipart/form-data" style={{ display: 'flex' }}>
-            <input className="border" style={{marginBottom:"10px"}} type="file" onChange={onFileChange} /> 
-            <BasicBtn className="border" type="button" onClick={imgUpload}>
-              이미지 업로드
+          <form className="admin-form" action='upload' method='post' encType="multipart/form-data">
+            <input className="custom-file" type="file" id="imgFile1" onChange={onFileChange} />
+            <FileLabel htmlFor="imgFile1" style={{marginRight:'5px'}}>              
+              {LunchImg && <img src={`${LunchImg}`} />}
+              {!LunchImg && `식단표`}
+            </FileLabel> 
+            <BasicBtn className="border" style={{height:'60px'}} type="button" onClick={imgUpload}>
+              업로드
+            </BasicBtn>
+            <input className="custom-file" type="file" id="imgFile2" onChange={onFileChange2} />
+            <FileLabel htmlFor="imgFile2" style={{margin:'0 5px 0 15px'}}>              
+              {LunchImg2 && <img src={`${LunchImg2}`} />}
+              {!LunchImg2 && `체크표`}
+            </FileLabel> 
+            <BasicBtn className="border" style={{height:'60px'}} type="button" onClick={imgUpload2}>
+              업로드
             </BasicBtn>
           </form>
-          <img src={`${API_SERVER}/images/${LunchImg}`} /> 
+          
           <BasicBtn className="border" type="button" onClick={CheckerHandler}>
             명단확인
           </BasicBtn>

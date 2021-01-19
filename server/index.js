@@ -58,17 +58,39 @@ app.post("/api/users/upload", upload.single('file'), (req, res) => {
     }
   );
 });
+app.post("/api/users/upload2", upload.single('file'), (req, res) => {
+  const image = new Image({...req.file,type:"check"});
+  console.log(req.file)
+  image.save(
+    (err, image) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).send({
+        success: true,
+      });
+    }
+  );
+});
+
 app.use('/images', express.static('uploads'));
 
 app.get("/api/users/getLunchImg", (req, res) => {
-  Image.find()
+  Image.findOne({type:"lunch"})
+  .sort({"_id":-1})
   .exec((err, img) => {
     res.status(200).json({
       img
     })
   })
 })
-
+app.get("/api/users/getCheckImg", (req, res) => {
+  Image.findOne({type:"check"})
+  .sort({"_id":-1})
+  .exec((err, img) => {
+    res.status(200).json({
+      img
+    })
+  })
+})
 
 
 app.post("/api/users/register", (req, res) => {

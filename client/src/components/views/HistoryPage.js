@@ -25,7 +25,7 @@ function HistoryPage(props) {
   const user = useSelector((state) => state.user);
   const [History, setHistory] = useState();
   const [Skip, setSkip] = useState(0)
-  const [Limit, setLimit] = useState(2)
+  const [Limit, setLimit] = useState(20)
   const [ListSize, setListSize] = useState()
   const [fetching, setFetching] = useState(false);
  

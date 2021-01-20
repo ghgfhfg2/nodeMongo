@@ -201,9 +201,9 @@ header a:hover {
 
 @media all and (min-width:1025px){
   .my-history .list{
-    width:calc(33.333% - 8px);margin-right: 12px;
+    width:calc(50% - 6px);margin-right: 12px;
   }
-  .my-history .list:nth-child(3n+3){margin-right: 0;}
+  .my-history .list:nth-child(2n+2){margin-right: 0;}
   
 }
 

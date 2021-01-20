@@ -111,6 +111,7 @@ function CheckPage(props) {
   useEffect(() => {
     axios.get(`${API_SERVER}/api/users/getLunchImg`)
     .then(res => {
+      res.data.img &&
       setGetLunchImg(res.data.img.originalname)
     })
   }, [GetLunchImg])
@@ -119,6 +120,7 @@ function CheckPage(props) {
   useEffect(() => {
     axios.get(`${API_SERVER}/api/users/getCheckImg`)
     .then(res => {
+      res.data.img &&
       setGetCheckhImg(res.data.img.originalname)
     })
   }, [GetCheckhImg])
@@ -127,11 +129,13 @@ function CheckPage(props) {
   const onCheckImg = () => {
     setCheckImg(!CheckImg)
     setCheckImg2(false)
+    !GetLunchImg && alert('식단표가 업로드 되지 않았습니다.')
   }
   const [CheckImg2, setCheckImg2] = useState(false)
   const onCheckImg2 = () => {
     setCheckImg(false)
     setCheckImg2(!CheckImg2)
+    !GetCheckhImg && alert('체크표가 업로드 되지 않았습니다.')
   }
 
   const moveHistory = () => {
@@ -147,8 +151,12 @@ function CheckPage(props) {
               <BasicBtn onClick={onCheckImg} style={{marginRight:"10px"}}>식단표 확인</BasicBtn>
               <BasicBtn onClick={onCheckImg2}>체크표 확인</BasicBtn>
             </div>
-            {CheckImg && <img src={`${API_SERVER}/images/${GetLunchImg}`}/>}
-            {CheckImg2 && <img src={`${API_SERVER}/images/${GetCheckhImg}`}/>}
+            {
+              CheckImg && GetLunchImg && <img src={`${API_SERVER}/images/${GetLunchImg}`}/>
+            } 
+            {
+              CheckImg2 && GetCheckhImg && <img src={`${API_SERVER}/images/${GetCheckhImg}`}/>
+            } 
           </div>
           <form onSubmit={onSubmitHandler}>
             <div className="radio-flex-box">

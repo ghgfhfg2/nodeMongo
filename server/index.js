@@ -48,19 +48,20 @@ const upload = multer({
 });
 app.post("/api/users/upload", upload.single('file'), (req, res) => {
   const image = new Image({...req.file,type:"lunch"});
-  console.log(req.file)
+  req.file ? 
   image.save(
     (err, image) => {
+      console.log()
       if (err) return res.json({ success: false, err });
       return res.status(200).send({
         success: true,
       });
     }
-  );
+  ) : res.json({ nofile: true })
 });
 app.post("/api/users/upload2", upload.single('file'), (req, res) => {
   const image = new Image({...req.file,type:"check"});
-  console.log(req.file)
+  req.file ? 
   image.save(
     (err, image) => {
       if (err) return res.json({ success: false, err });
@@ -68,7 +69,7 @@ app.post("/api/users/upload2", upload.single('file'), (req, res) => {
         success: true,
       });
     }
-  );
+  ) : res.json({ nofile: true })
 });
 
 app.use('/images', express.static('uploads'));

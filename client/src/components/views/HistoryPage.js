@@ -76,8 +76,6 @@ const handleScroll = () => {
     getHistory(variables)
     setSkip(skip)
   }
-  console.log(scrollTop)
-  console.log(TopFix)
   if(scrollTop > 150){
     setTopFix(true)
   }else{
@@ -103,6 +101,7 @@ const handleScroll = () => {
     return (
       <>
         <ContentBox>
+          {TopFix && <div style={{height:'69px'}}></div>}
           <div className={"ani-fadein history-top-fix " + (TopFix ? 'on ani-down' : "")}>
             <h4>{user.userData.name}님의 최근 {AllCount}일간 식단횟수</h4>
             <CheckChart style={{marginBottom:'20px'}}>            

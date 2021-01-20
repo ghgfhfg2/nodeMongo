@@ -101,6 +101,10 @@ function AdminPage() {
     // 서버의 upload API 호출
     const res = await axios.post(`${API_SERVER}/api/users/upload`, formData)
     .then(res => {
+      if(res.data.nofile){
+        alert('이미지를 먼저 올려주세요')
+        return 
+      }
       alert('식단표 업로드 완료')
     });
   }
@@ -110,6 +114,10 @@ function AdminPage() {
     // 서버의 upload API 호출
     const res = await axios.post(`${API_SERVER}/api/users/upload2`, formData)
     .then(res => {
+      if(res.data.nofile){
+        alert('이미지를 먼저 올려주세요')
+        return 
+      }
       alert('체크표 업로드 완료')
     });
   }

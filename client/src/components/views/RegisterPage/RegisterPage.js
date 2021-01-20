@@ -4,10 +4,14 @@ import { joinUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { BasicBtn, BasicInput, ContentBox } from "../CheckPage";
-
+import { API_SERVER } from "../../../Config"
+import axios from "axios"
+const INPUT_CONFIRM = styled.span`
+  font-size: 12px;padding-left:10px;
+`;
 const PW_CONFIRM = styled.span`
   display: ${(props) => (props.pw === props.pw2 ? "none" : "block")};
-  font-size: 12px;
+  font-size: 12px;padding-left:10px;
 `;
 export const BasicSelect = styled.select`
   width: 100%;
@@ -16,6 +20,7 @@ export const BasicSelect = styled.select`
   border-radius: 5px;
   background: #fff;
   padding: 0 10px;
+  font-size:12px
 `;
 
 function RegisterPage(props) {
@@ -85,6 +90,25 @@ function RegisterPage(props) {
       }
     });
   };
+
+  const [IdCheck, setIdCheck] = useState('')
+  const onIdCheck = () => {
+    const body = {
+      id:Id
+    }
+    axios.post(`${API_SERVER}/api/users/idCheck`, body)
+    .then(res => {
+      if(Id){
+      res.data.idConfirm ?  setIdCheck('사용 가능한 아이디 입니다.') : setIdCheck('이미 사용중인 아이디 입니다.')
+      console.log(res.data.idConfirm)
+    }else{
+        setIdCheck('아이디를 입력해 주세요')
+
+      }
+      console.log(IdCheck)
+      }
+    )
+  }
   return (
     <ContentBox className="join-box">
       <h2 className="sub-h2 center mb">회원가입</h2>
@@ -96,24 +120,25 @@ function RegisterPage(props) {
           flexDirection: "column",margin:"0 auto"
         }}
       >
-        <div className="flex-box a-center">
-        <label htmlFor="id">아이디</label>
+        <div style={{marginBottom:"12px"}}>
+        <div className="flex-box a-center" style={{marginBottom:"0"}}>
         <BasicInput
           id="id"
           type="text"
-          placeholder="영문,숫자조합 4~12자리"
+          placeholder="아이디(영문,숫자조합 4~12자리)"
           value={Id}
           onChange={onIdHandler}
         />
+        <BasicBtn type="button" onClick={onIdCheck} style={{fontSize:"12px",marginLeft:"5px",width:"100px"}}>중복확인</BasicBtn>
+        </div>
+        {IdCheck && <INPUT_CONFIRM>{IdCheck}</INPUT_CONFIRM>}
         </div>
         <div className="flex-box a-center">
-        <label htmlFor="name">이름(실명)</label>
-        <BasicInput id="name" type="text" value={Name} onChange={onNameHandler} />
+        <BasicInput placeholder="이름(실명)" id="name" type="text" value={Name} onChange={onNameHandler} />
         </div>
         <div className="flex-box a-center">
-        <label htmlFor="part">부서</label>
         <BasicSelect id="part" value={Part} onChange={onPartHandler}>
-          <option value="none">선택해주세요</option>
+          <option value="none">부서</option>
           <option value="R&D">R&D</option>
           <option value="전략기획부">전략기획부</option>
           <option value="영업지원부">영업지원부</option>
@@ -124,21 +149,26 @@ function RegisterPage(props) {
         </BasicSelect>
         </div>
         <div className="flex-box a-center">
-        <label htmlFor="ipw">비밀번호</label>
-        <BasicInput id="ipw" type="password" value={passWord} onChange={onPasswordHandler} />
+        <BasicInput 
+        id="ipw" 
+        type="password" 
+        value={passWord} 
+        onChange={onPasswordHandler} 
+        placeholder="비밀번호"
+        />
         </div>
-        <div className="flex-box a-center">
-        <label htmlFor="ipw2">비밀번호 확인</label>
+        <div style={{marginBottom:"15px"}}>
         <BasicInput
            id="ipw2"
           type="password"
           value={passWord2}
           onChange={onPasswordHandler2}
+          placeholder="비밀번호 확인"
         />
-        </div>
         <PW_CONFIRM pw={passWord} pw2={passWord2}>
           <span>비밀번호가 일치하지 않습니다</span>
         </PW_CONFIRM>
+        </div>
         <BasicBtn type="submit">가입하기</BasicBtn>
       </form>
     </ContentBox>

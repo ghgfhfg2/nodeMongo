@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { check } from "../../_actions/user_action";
 import axios from "axios";
 import { getFormatDate } from "./Func";
@@ -21,6 +22,7 @@ export const BasicInput = styled.input`
   border-radius: 5px;
   background: #fff;
   padding: 0 10px;
+  font-size:12px;
 `;
 export const BasicBtn = styled.button`
   width: 100%;
@@ -50,7 +52,7 @@ const currentDate = getFormatDate(new Date());
 const dbDate = Number(currentDate.split("|")[0]);
 const dbDay = currentDate.split("|")[1];
 const dbTime = currentDate.split("|")[2];
-function CheckPage() {
+function CheckPage(props) {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [radio, setRadio] = useState("");
@@ -132,10 +134,14 @@ function CheckPage() {
     setCheckImg2(!CheckImg2)
   }
 
+  const moveHistory = () => {
+    props.history.push('/history')
+  }
+
   if (Checked === "none") {
     return (
       <>
-        <ContentBox>
+        <ContentBox className="ani-fadein">
           <div className="check-img-box">
             <div className="flex-box">
               <BasicBtn onClick={onCheckImg} style={{marginRight:"10px"}}>식단표 확인</BasicBtn>
@@ -186,9 +192,12 @@ function CheckPage() {
     return (
       <>
         <ContentBox className="center-box">
-          <span className="ic-check">
-            <antIcon.CheckOutlined /> 식단체크 참여 완료
-          </span>
+          <div className="flex-box d-col">
+            <span className="ic-check ani-fadein">
+              <antIcon.CheckOutlined /> 식단체크 참여 완료
+            </span>
+            <BasicBtn type="button" className="ani-fadein delay-1" style={{marginTop:"15px"}} onClick={moveHistory}>체크 내역보기</BasicBtn>
+          </div>
         </ContentBox>
       </>
     );
@@ -201,4 +210,4 @@ function CheckPage() {
   }
 }
 
-export default CheckPage;
+export default withRouter(CheckPage);

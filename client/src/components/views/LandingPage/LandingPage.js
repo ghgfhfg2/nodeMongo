@@ -15,7 +15,6 @@ const LandingLink = styled.a`
   font-size: 20px;
   font-weight: 700;
   color: #555;
-  transition: all 0s;
   &:hover {
     color: #91d081;
     border-color: #91d081;
@@ -42,11 +41,11 @@ function LandingPage(props) {
             paddingTop: "30px",
           }}
         >
-          <LandingLink href="/check">
+          <LandingLink className="ani-fadeup" href="/check">
             <bsIcon.BsCheckCircle />
             <span>식단체크</span>
           </LandingLink>
-          <LandingLink href="/history">
+          <LandingLink className="ani-fadeup delay-1" href="/history">
             <bsIcon.BsCardChecklist />
             <span>식단내역</span>
           </LandingLink>

@@ -1,4 +1,4 @@
-.ant-layout-header{background: #4fa138 !important;}
+.ant-layout-header{background: #409226 !important;}
 .center-box {
   width: 100%;
   height: calc(100vh - 64px);
@@ -18,8 +18,9 @@ ol,ul,dl{margin-bottom:0}
 .flex-box.between{justify-content: space-between;}
 .flex-box.j-center{justify-content: center;}
 .flex-box.a-center{align-items: center;}
+.flex-box.d-col{flex-direction: column;}
 .ant-layout-header.header {
-  padding: 0 15px;font-size: 12px;font-weight: 700;
+  font-size: 12px;font-weight: 700;padding: 0;
 }
 input::placeholder {
   color: #aaa;
@@ -100,9 +101,9 @@ header a {
   color: #fff;
 }
 header a:hover {
-  color: #75bf61;
+  color: #fff;
 }
-
+.header > div{max-width: 1000px;margin:0 auto;padding: 0 15px;}
 .ic-check {
   font-size: 18px;
   font-weight: 700;
@@ -110,6 +111,10 @@ header a:hover {
   align-items: center;
   justify-content: center;
 }
+.left-nav{display: flex;align-items: center;}
+.left-nav a{margin-right: 10px;padding-right: 10px;position: relative;}
+.left-nav a::after{content: "";display: inline-block;width: 1px;height: 12px;background-color: rgba(255,255,255,0.5);position: absolute;right: 1px;top:27px;}
+.left-nav a:last-child:after{display: none;}
 .ic-check svg {
   width: 30px;
   height: 30px;
@@ -169,11 +174,12 @@ header a:hover {
 }
 .my-history .list .date {
   color: #888;font-weight: 500;
-  font-size: 12px;
+  font-size: 12px;text-align: right;
 }
 .my-history .list .choice {
   display: flex;
   align-items: center;
+  margin-right: 25px;
 }
 .my-history .list .choice i {
   display: inline-block;
@@ -189,6 +195,10 @@ header a:hover {
   background: url(./img/healthy-food_on.svg) center no-repeat;
 }
 
+.history-top-fix.on{
+  position: fixed;left: 0;top: 0;width: 100%;padding: 10px 15px 0 15px;background: #fff;z-index: 10;border-bottom: 1px solid #ddd;  
+}
+
 @media all and (min-width:1025px){
   .my-history .list{
     width:calc(33.333% - 8px);margin-right: 12px;
@@ -198,7 +208,7 @@ header a:hover {
 }
 
 .join-box .flex-box{margin-bottom: 12px;}
-.join-box .flex-box label{width:140px;font-size: 13px;font-weight: 700;color: #333;}
+.join-box .flex-box label{width:100px;font-size: 13px;font-weight: 700;color: #333;flex-shrink: 0;}
 
 .admin-form{
   display: flex;align-items: center;margin-bottom: 10px;max-width: 50%;
@@ -217,3 +227,51 @@ header a:hover {
 .admin-table th,
 .admin-table td{text-align: center;}
 
+
+.ani-fadeup{
+  animation: fade_up 0.6s both;
+}
+.ani-faderight{
+  animation: fade_right 0.6s both;
+}
+.ani-fadein{
+  animation: fade_in 0.4s both;
+}
+.ani-down{
+  animation: ani_down 0.3s both;
+}
+.delay-1{animation-delay: 0.2s;}
+.delay-2{animation-delay: 0.4s;}
+.delay-3{animation-delay: 0.6s;}
+@keyframes ani_down {
+  from{
+    opacity: 0;transform: translateY(-100%);
+  }
+  to{
+    opacity: 1;transform: translateY(0);
+  }
+}
+@keyframes fade_up {
+  from{
+    opacity: 0;transform: translateY(30px);
+  }
+  to{
+    opacity: 1;transform: translateY(0);
+  }
+}
+@keyframes fade_right {
+  from{
+    opacity: 0;transform: translateX(-30px);
+  }
+  to{
+    opacity: 1;transform: translateX(0);
+  }
+}
+@keyframes fade_in {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}

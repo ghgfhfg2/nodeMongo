@@ -186,12 +186,17 @@ app.post("/api/users/checkData", (req, res) => {
 });
 
 app.post("/api/users/history", (req, res) => {
+  let limit = req.body.limit ? parseInt(req.body.limit) : 30;
+  let skip = parseInt(req.body.skip);
   Check.find({ id: req.body.id })
-    .sort({ date: -1 }).limit(20)
+    .sort({ date: -1 })
+    .skip(skip)
+    .limit(limit)
     .exec((err, data) => {
       if (err) return res.status(400).json({ success: false, err });
       res.status(200).json({
         dataCheck: true,
+        listSize: data.length,
         data,
       });
     });
@@ -224,6 +229,14 @@ app.get("/api/users/userNormal", (req, res) => {
   });
 });
 
+app.post("/api/users/idCheck", (req, res) => {
+  User.find({ id: req.body.id })
+  .exec((err, data) => {
+    if (err) return res.status(400).json({ success: false, err });
+    if (data == "") return res.status(200).json({ idConfirm: true });
+    res.status(200).json({idConfirm: false})
+  });
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 

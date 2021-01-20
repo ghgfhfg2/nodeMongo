@@ -33,7 +33,7 @@ function RightMenu(props) {
           <a href="/admin" style={{ marginRight: "10px" }}>
             관리자
           </a>
-          <a href="/" style={{ marginRight: "10px" }} onClick={onLogout}>
+          <a href="/" onClick={onLogout}>
             로그아웃
           </a>
         </>
@@ -41,7 +41,7 @@ function RightMenu(props) {
     }else{
       return (
         <>
-          <a href="/" style={{ marginRight: "10px" }} onClick={onLogout}>
+          <a href="/" onClick={onLogout}>
           로그아웃
           </a>
         </>

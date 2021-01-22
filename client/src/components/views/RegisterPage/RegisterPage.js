@@ -26,7 +26,7 @@ export const BasicSelect = styled.select`
 function RegisterPage(props) {
   const dispatch = useDispatch();
 
-  const idReg = /^[A-za-z]{4,6}/g;
+  const idReg = /^[A-za-z]{3,6}/g;
   const [Id, setId] = useState("");
   const onIdHandler = (e) => {
     setId(e.currentTarget.value);
